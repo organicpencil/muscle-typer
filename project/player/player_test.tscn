@@ -12,4 +12,4 @@ script = ExtResource( 1 )
 transform = Transform( -1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 3, -17 )
 projection = 1
 fov = 45.0
-size = 10.0
+size = 20.0

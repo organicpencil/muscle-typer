@@ -1,7 +1,17 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=4 format=2]
 
 [ext_resource path="res://player/player.dae" type="PackedScene" id=1]
 [ext_resource path="res://player/player.gd" type="Script" id=2]
+[ext_resource path="res://player/bar.dae" type="PackedScene" id=3]
 
 [node name="Player" instance=ExtResource( 1 )]
 script = ExtResource( 2 )
+
+[node name="ArmR" type="BoneAttachment" parent="Armature/Skeleton" index="1"]
+transform = Transform( 1.22935e-07, 0.996195, -0.0871553, -0.258819, 0.0841857, 0.96225, 0.965926, 0.0225575, 0.257834, 0.8, 0.717705, -0.120307 )
+bone_name = "forearm_r"
+
+[node name="Spatial" type="Spatial" parent="Armature/Skeleton/ArmR" index="0"]
+
+[node name="Bar" parent="Armature/Skeleton/ArmR/Spatial" index="0" instance=ExtResource( 3 )]
+transform = Transform( -7.98565e-08, -0.984808, -0.173649, 0.996195, -0.0151343, 0.0858313, -0.0871558, -0.172988, 0.98106, 0, -0.895592, -0.921646 )

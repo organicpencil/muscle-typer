@@ -5,6 +5,7 @@ var _anim_grow
 
 var _lifting = false
 var _delayed_signal = false
+var _weights = 0
 
 ## Important vars
 var lift_speed = 0.0 # Set me to determine lifting speed. Normal = 1.0
@@ -15,12 +16,29 @@ signal lift_start
 signal lift_end
 signal lift_start_delayed
 
+const WEIGHT_SCENE = preload("weight.dae")
+
 func _ready():
 	_anim_lift = $AnimationPlayer
 	_anim_grow = _anim_lift.duplicate()
 	add_child(_anim_grow)
 	
 	_anim_grow.play("grow", -1, 0.0)
+	
+	add_weight()
+	add_weight()
+	add_weight()
+	
+func add_weight():
+	var weight = WEIGHT_SCENE.instance()
+	$Armature/Skeleton/ArmR/Spatial/Bar.add_child(weight)
+	weight.translation = Vector3(1.2 + 0.3 * _weights, 0.0, 0.0)
+	
+	weight = WEIGHT_SCENE.instance()
+	$Armature/Skeleton/ArmR/Spatial/Bar.add_child(weight)
+	weight.translation = Vector3(-1.2 - 0.3 * _weights, 0.0, 0.0)
+	
+	_weights += 1
 	
 func _process(delta):
 	if !_anim_lift.is_playing():
