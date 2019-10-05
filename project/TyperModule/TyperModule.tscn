@@ -1,0 +1,39 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://TyperModule/TyperCapture.gd" type="Script" id=1]
+[ext_resource path="res://TyperModule/TextConsole.gd" type="Script" id=2]
+
+[sub_resource type="DynamicFontData" id=1]
+font_path = "res://TyperModule/Fonts/BrassMono/regular.otf"
+
+[sub_resource type="DynamicFont" id=2]
+size = 35
+outline_color = Color( 0.388235, 0.956863, 0.384314, 1 )
+font_data = SubResource( 1 )
+
+[node name="TyperCapture" type="Node"]
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+script = ExtResource( 1 )
+
+[node name="TextEdit" type="TextEdit" parent="CanvasLayer"]
+modulate = Color( 0.717647, 0.67451, 0.67451, 1 )
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_top = -55.0
+margin_right = -2.0
+grow_vertical = 0
+custom_fonts/font = SubResource( 2 )
+custom_colors/caret_color = Color( 0.709804, 0.964706, 0.713726, 1 )
+custom_colors/font_color = Color( 0.360784, 0.933333, 0.372549, 1 )
+custom_colors/background_color = Color( 0, 0, 0, 1 )
+custom_colors/completion_background_color = Color( 0, 0, 0, 1 )
+custom_colors/current_line_color = Color( 0, 0, 0, 1 )
+custom_colors/word_highlighted_color = Color( 1, 0.960784, 0.447059, 1 )
+caret_blink = true
+caret_blink_speed = 0.34
+script = ExtResource( 2 )
+[connection signal="_on_submit" from="CanvasLayer/TextEdit" to="CanvasLayer" method="_on_TextEdit__on_submit"]
+[connection signal="request_completion" from="CanvasLayer/TextEdit" to="CanvasLayer" method="_on_TextEdit_request_completion"]
+[connection signal="text_changed" from="CanvasLayer/TextEdit" to="CanvasLayer" method="_on_TextEdit_text_changed"]
