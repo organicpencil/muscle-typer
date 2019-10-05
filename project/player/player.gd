@@ -13,7 +13,7 @@ var arm_size = 0.0 # Ranges from 0.0 to 4.0
 ### Signals that might be important for sound and scoring
 signal lift_start
 signal lift_end
-signal grunt
+signal lift_start_delayed
 
 func _ready():
 	anim_lift = $AnimationPlayer
@@ -39,6 +39,6 @@ func _process(delta):
 		
 		if !grunted and anim_lift.current_animation_position > 0.15:
 			grunted = true
-			emit_signal("grunt")
+			emit_signal("lift_start_delayed")
 			
 	anim_grow.seek(arm_size)
