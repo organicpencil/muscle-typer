@@ -24,6 +24,9 @@ var next_status = 0
 var all_phrases # Array loaded from json
 
 signal timeout_value # emits float range 0-100 for timeout progress
+signal typing_progress(percent) # emits float range 0-1 for lift progress
+signal typing_finished
+signal typing_failed
 
 func _ready():
 	status_label = get_node(status_label)
@@ -67,6 +70,7 @@ func next_message():
 	message_text = all_phrases.pop_front()
 	message_label.bbcode_text = " [color=#3399ff]%s[/color]" % message_text
 	timer.start()
+	emit_signal("typing_started")
 	return true
 	
 func _on_text_changed(input_text):
@@ -82,6 +86,7 @@ func _on_text_changed(input_text):
 			
 	bbcode += "[color=#ffffff]#[/color]"
 	input_label.bbcode_text = bbcode
+	emit_signal("typing_progress", min(float(input_text.length()) / float(message_text.length()), 1.0))
 	
 func _on_text_entered(input_text):
 	if game_state != STATE_PLAYING:
@@ -95,6 +100,7 @@ func _on_text_entered(input_text):
 	timer.stop()
 	
 	if input_text == message_text:
+		emit_signal("typing_finished")
 		var prefix = good_prefixes[next_prefix]
 		var status = good_statuses[next_status]
 		next_status += 1
@@ -118,6 +124,7 @@ func _on_text_entered(input_text):
 		
 	else:
 		mistakes += 1
+		emit_signal("typing_failed")
 		
 		if input_text == null:
 			status_label.bbcode_text = " [color=#ff3300]Too slow, ye dropped it. %d/%d[/color]" % [mistakes, max_mistakes]
