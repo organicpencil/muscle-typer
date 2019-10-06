@@ -78,6 +78,10 @@ func _on_text_entered(input_text):
 	if game_state != STATE_PLAYING:
 		return
 		
+	if input_text == "":
+		# Ignore empty in case the keyboard double-pressed
+		return
+		
 	messages_processed += 1
 	
 	if input_text == message_text:
