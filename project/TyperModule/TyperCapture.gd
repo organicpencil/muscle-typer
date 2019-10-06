@@ -7,6 +7,7 @@ var storedPhrase
 var level = 1
 var total_phrases = 30
 var next_grunt = 0
+var positive_responses = ["Good", "Excellent", "Nice", "Superb"]
 
 export(NodePath) var player
 
@@ -122,9 +123,14 @@ func _on_TextEdit__on_submit():
 	if _check_complete(_parse_text(storedPhrase)):
 		print("Success!")
 		player.lift_success()
+		positive_responses.shuffle()
+		$Status.text = positive_responses[0]
+		$Status.modulate = Color(0, 1, 0, 1)
 	else:
 		print("Failure")
 		player.lift_failure()
+		$Status.text = "Mistake!"
+		$Status.modulate = Color(1, 0, 0, 1)
 	player.arm_size += 1.0 / total_phrases
 	currentPhrase = levelPhrases[(randi() % levelPhrases.size())]
 	$CurrentPhrase.text = currentPhrase

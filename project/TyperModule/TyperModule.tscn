@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=2]
+[gd_scene load_steps=10 format=2]
 
 [ext_resource path="res://TyperModule/TyperCapture.gd" type="Script" id=1]
 [ext_resource path="res://TyperModule/TextConsole.gd" type="Script" id=2]
@@ -15,6 +15,12 @@ outline_color = Color( 0.388235, 0.956863, 0.384314, 1 )
 font_data = SubResource( 1 )
 
 [sub_resource type="DynamicFont" id=3]
+size = 48
+outline_size = 4
+outline_color = Color( 0, 0, 0, 1 )
+font_data = ExtResource( 3 )
+
+[sub_resource type="DynamicFont" id=4]
 size = 48
 outline_size = 4
 outline_color = Color( 0, 0, 0, 1 )
@@ -60,6 +66,13 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 texture = ExtResource( 4 )
 stretch_mode = 4
+
+[node name="Status" type="Label" parent="CanvasLayer"]
+margin_left = 30.0
+margin_top = 20.0
+margin_right = 70.0
+margin_bottom = 34.0
+custom_fonts/font = SubResource( 4 )
 
 [node name="Player" parent="." instance=ExtResource( 5 )]
 
