@@ -134,9 +134,6 @@ func _on_text_entered(input_text):
 		mistakes += 1
 		emit_signal("typing_failed")
 		
-		if !Global.cracked and mistakes == 2:
-			Global.emit_signal("crack")
-		
 		if input_text == null:
 			status_label.bbcode_text = " [color=#ff3300]Too slow, ye dropped it. %d/%d[/color]" % [mistakes, max_mistakes]
 		else:
@@ -160,7 +157,7 @@ func _on_text_entered(input_text):
 		line_edit.text = ""
 		input_label.bbcode_text = ""
 		message_label.bbcode_text = ""
-		yield(get_tree().create_timer(2.0), "timeout")
+		yield(get_tree().create_timer(1.5), "timeout")
 		if game_state == STATE_BETWEEN:
 			game_state = STATE_PLAYING
 			next_message()

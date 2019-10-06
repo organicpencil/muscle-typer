@@ -1,5 +1,7 @@
 extends Spatial
 
+export(NodePath) var bar
+
 var _anim_lift
 var _anim_grow
 
@@ -20,6 +22,7 @@ var lift_percent = 0.0 # Ranges from 0.0 to 1.0, should match percent of letters
 signal delayed_grunt
 
 const WEIGHT_SCENE = preload("weight.dae")
+const BAR_DROPPED_SCENE = preload("bar_dropped.tscn")
 
 var next_grunt = 0
 var grunts = [preload("res://audio/grunt_sound_pack_1/grunt_1.wav"),
@@ -33,6 +36,8 @@ var grunts = [preload("res://audio/grunt_sound_pack_1/grunt_1.wav"),
 	preload("res://audio/grunt_sound_pack_1/grunt_9.wav"),]
 
 func _ready():
+	bar = get_node(bar)
+	
 	_anim_lift = $AnimationPlayer
 	_anim_grow = _anim_lift.duplicate()
 	add_child(_anim_grow)
@@ -45,11 +50,11 @@ func _ready():
 	
 func add_weight():
 	var weight = WEIGHT_SCENE.instance()
-	$Armature/Skeleton/ArmR/Spatial/Bar.add_child(weight)
+	bar.add_child(weight)
 	weight.translation = Vector3(1.2 + 0.3 * _weights, 0.0, 0.0)
 	
 	weight = WEIGHT_SCENE.instance()
-	$Armature/Skeleton/ArmR/Spatial/Bar.add_child(weight)
+	bar.add_child(weight)
 	weight.translation = Vector3(-1.2 - 0.3 * _weights, 0.0, 0.0)
 	
 	_weights += 1
@@ -61,6 +66,20 @@ func _on_lift_success():
 	arm_size += growth_delta
 	
 func _on_lift_failure():
+	var dropped = BAR_DROPPED_SCENE.instance()
+	if lift_percent >= 1.0:
+		dropped.fully_charged = 1.0
+		
+	get_parent().add_child(dropped)
+	dropped.global_transform = bar.global_transform
+	for c in bar.get_children():
+		if c.get_name() != "bar":
+			var c2 = c.duplicate()
+			dropped.add_child(c2)
+			
+	bar.hide()
+	dropped.connect("tree_exiting", bar, "show")
+	
 	_anim_lift.play("lift_down", 0.2)
 	lift_percent = 0.0
 	arm_size += growth_delta
