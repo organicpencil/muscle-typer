@@ -25,15 +25,6 @@ const WEIGHT_SCENE = preload("weight.dae")
 const BAR_DROPPED_SCENE = preload("bar_dropped.tscn")
 
 var next_grunt = 0
-var grunts = [preload("res://audio/grunt_sound_pack_1/grunt_1.wav"),
-	preload("res://audio/grunt_sound_pack_1/grunt_2.wav"),
-	preload("res://audio/grunt_sound_pack_1/grunt_3.wav"),
-	preload("res://audio/grunt_sound_pack_1/grunt_4.wav"),
-	preload("res://audio/grunt_sound_pack_1/grunt_5.wav"),
-	preload("res://audio/grunt_sound_pack_1/grunt_6.wav"),
-	preload("res://audio/grunt_sound_pack_1/grunt_7.wav"),
-	preload("res://audio/grunt_sound_pack_1/grunt_8.wav"),
-	preload("res://audio/grunt_sound_pack_1/grunt_9.wav"),]
 
 func _ready():
 	bar = get_node(bar)
@@ -105,9 +96,9 @@ func _process(delta):
 		if !_delayed_signal and _anim_lift.current_animation_position > 0.3:
 			_delayed_signal = true
 			emit_signal("delayed_grunt") # Probably does nothing, moved code here
-			get_node("AudioStreamPlayer").stream = grunts[next_grunt]
+			get_node("AudioStreamPlayer").stream = Global.grunts[next_grunt]
 			get_node("AudioStreamPlayer").play()
-			if grunts.size() - 1 > next_grunt:
+			if Global.grunts.size() - 1 > next_grunt:
 				next_grunt += 1
 			
 			

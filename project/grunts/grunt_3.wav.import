@@ -2,12 +2,12 @@
 
 importer="wav"
 type="AudioStreamSample"
-path="res://.import/grunt_3.wav-0582a8324b802181f904c88eb1d702fd.sample"
+path="res://.import/grunt_3.wav-405988c9608d8f73dc5d520478f75313.sample"
 
 [deps]
 
-source_file="res://audio/grunt_sound_pack_1/grunt_3.wav"
-dest_files=[ "res://.import/grunt_3.wav-0582a8324b802181f904c88eb1d702fd.sample" ]
+source_file="res://grunts/grunt_3.wav"
+dest_files=[ "res://.import/grunt_3.wav-405988c9608d8f73dc5d520478f75313.sample" ]
 
 [params]
 
