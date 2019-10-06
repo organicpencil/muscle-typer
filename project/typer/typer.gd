@@ -24,6 +24,7 @@ var next_status = 0
 var all_phrases # Array loaded from json
 
 signal timeout_value # emits float range 0-100 for timeout progress
+signal typing_started
 signal typing_progress(percent) # emits float range 0-1 for lift progress
 signal typing_finished
 signal typing_failed
