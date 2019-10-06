@@ -15,7 +15,7 @@ _global_script_class_icons={
 
 [application]
 
-config/name="Muscle Typer"
+config/name="MUSCLE TYPER"
 run/main_scene="res://TyperModule/TyperModule.tscn"
 config/icon="res://icon.png"
 
