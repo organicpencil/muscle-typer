@@ -1,7 +1,9 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://typer/typer.gd" type="Script" id=1]
-[ext_resource path="res://typer/font.tres" type="DynamicFont" id=2]
+[ext_resource path="res://typer/progress_background.png" type="Texture" id=2]
+[ext_resource path="res://typer/progress_bar.png" type="Texture" id=3]
+[ext_resource path="res://typer/font.tres" type="DynamicFont" id=4]
 
 [node name="Typer" type="Control"]
 anchor_right = 1.0
@@ -14,7 +16,7 @@ line_edit = NodePath("LineEdit")
 timer = NodePath("Timer")
 timer_progress = NodePath("TimerProgress")
 
-[node name="TimerProgress" type="ProgressBar" parent="."]
+[node name="TimerProgress" type="TextureProgress" parent="."]
 anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -22,14 +24,16 @@ margin_left = 20.0
 margin_top = -79.0
 margin_right = -24.0
 margin_bottom = -65.0
-percent_visible = false
+texture_under = ExtResource( 2 )
+texture_progress = ExtResource( 3 )
+nine_patch_stretch = true
 
 [node name="Status" type="RichTextLabel" parent="."]
 margin_left = 30.0
 margin_top = 30.0
 margin_right = 1020.0
 margin_bottom = 160.0
-custom_fonts/normal_font = ExtResource( 2 )
+custom_fonts/normal_font = ExtResource( 4 )
 bbcode_enabled = true
 scroll_active = false
 
@@ -40,7 +44,7 @@ margin_left = 30.0
 margin_top = -126.0
 margin_right = 1020.0
 margin_bottom = -81.0
-custom_fonts/normal_font = ExtResource( 2 )
+custom_fonts/normal_font = ExtResource( 4 )
 bbcode_enabled = true
 scroll_active = false
 
@@ -51,7 +55,7 @@ margin_left = 30.0
 margin_top = -60.0
 margin_right = 1020.0
 margin_bottom = -20.0
-custom_fonts/normal_font = ExtResource( 2 )
+custom_fonts/normal_font = ExtResource( 4 )
 bbcode_enabled = true
 scroll_active = false
 
