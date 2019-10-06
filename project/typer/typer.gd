@@ -23,7 +23,7 @@ var next_status = 0
 
 var all_phrases # Array loaded from json
 
-signal timeout_value # emits float range 0-100 for timeout progress
+signal timeout_strength # emits float range 0-1 for timeout progress
 signal typing_started
 signal typing_progress(percent) # emits float range 0-1 for lift progress
 signal typing_finished
@@ -171,4 +171,4 @@ func _process(delta):
 	else:
 		timer_progress.value = ((timer.wait_time - timer.time_left) / timer.wait_time) * 100.0
 		
-	emit_signal("timeout_value", timer_progress.value)
+	emit_signal("timeout_strength", float(timer_progress.value) / 100.0)
