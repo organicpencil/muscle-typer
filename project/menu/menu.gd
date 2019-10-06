@@ -14,7 +14,7 @@ func _input(event):
 		return
 		
 	if event is InputEventKey and event.is_pressed():
-		if event.scancode == KEY_SPACE:
+		if event.scancode == KEY_SPACE and visible:
 			yield(get_tree(), "idle_frame")
 			Global.emit_signal("start")
 			
