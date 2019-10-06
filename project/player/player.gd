@@ -11,7 +11,8 @@ var _arm_size_lerp = 0.0
 
 ## Important vars
 #var lift_speed = 0.0 # Set me to determine lifting speed. Normal = 1.0
-var arm_size = 0.0 # Ranges from 0.0 to 1.0
+var growth_delta = 0.1 # Amount to grow with each phrase
+var arm_size = 0.0 # Ranges from 0.0 to 1.0 (don't need to touch, change growth_delta instead)
 var lift_percent = 0.0 # Ranges from 0.0 to 1.0, should match percent of letters typed
 
 ### Signals that might be important for sound and scoring
@@ -56,17 +57,19 @@ func _on_lift_success():
 	_lifting = false
 	_anim_lift.play("lift_down", 0.2)
 	lift_percent = 0.0
+	arm_size += growth_delta
 	
 func _on_lift_failure():
 	_anim_lift.play("lift_down", 0.2)
 	lift_percent = 0.0
+	arm_size += growth_delta
 	
 func _on_lift_progress(percent):
 	lift_percent = percent
 	
 func _process(delta):
 	_lift_percent_lerp = lerp(_lift_percent_lerp, lift_percent, 0.1)
-	_arm_size_lerp = lerp(_arm_size_lerp, arm_size, 0.01)
+	_arm_size_lerp = min(lerp(_arm_size_lerp, arm_size, 0.01), 1.0)
 	
 	if !_anim_lift.is_playing():
 		_lifting = true
