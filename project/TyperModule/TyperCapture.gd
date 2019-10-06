@@ -6,13 +6,26 @@ var currentPhrase
 var storedPhrase
 var level = 1
 var total_phrases = 30
+var next_grunt = 0
 
 export(NodePath) var player
+
+var grunts = [preload("res://audio/grunt_sound_pack_1/grunt_1.wav"),
+	preload("res://audio/grunt_sound_pack_1/grunt_2.wav"),
+	preload("res://audio/grunt_sound_pack_1/grunt_3.wav"),
+	preload("res://audio/grunt_sound_pack_1/grunt_4.wav"),
+	preload("res://audio/grunt_sound_pack_1/grunt_5.wav"),
+	preload("res://audio/grunt_sound_pack_1/grunt_6.wav"),
+	preload("res://audio/grunt_sound_pack_1/grunt_7.wav"),
+	preload("res://audio/grunt_sound_pack_1/grunt_8.wav"),
+	preload("res://audio/grunt_sound_pack_1/grunt_9.wav"),]
 
 func _ready():
 	assert(player != null)
 	player = get_node(player)
 	_retrieve_json()
+	
+	player.connect("delayed_grunt", self, "_play_grunt")
 
 ## retrieves json
 func _retrieve_json():
@@ -64,6 +77,12 @@ func _parse_text(phrase):
 			secondaryCount+=1
 		primaryCount+=1
 	return([currentPhraseToMatch.size(), matches, matchingOrder])
+
+func _play_grunt():
+	get_node("../AudioStreamPlayer").stream = grunts[next_grunt]
+	get_node("../AudioStreamPlayer").play()
+	if grunts.size() - 1 > next_grunt:
+		next_grunt += 1
 
 ##
 # @params - checks (number of words, num of matches, in-order words)
