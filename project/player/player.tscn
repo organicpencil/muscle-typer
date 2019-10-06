@@ -8,7 +8,7 @@
 script = ExtResource( 2 )
 
 [node name="ArmR" type="BoneAttachment" parent="Armature/Skeleton" index="1"]
-transform = Transform( 1.22935e-07, 0.996195, -0.0871553, -0.258819, 0.0841857, 0.96225, 0.965926, 0.0225575, 0.257834, 0.8, 0.717705, -0.120307 )
+transform = Transform( 0, 0.996194, -0.0871557, -0.533297, -0.0737274, -0.842709, -0.845928, 0.0464799, 0.531268, 0.8, 1.6928, -0.627908 )
 bone_name = "forearm_r"
 
 [node name="Spatial" type="Spatial" parent="Armature/Skeleton/ArmR" index="0"]

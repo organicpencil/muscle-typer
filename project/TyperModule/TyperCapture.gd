@@ -5,8 +5,13 @@ var levelPhrases
 var currentPhrase
 var storedPhrase
 var level = 1
+var total_phrases = 30
+
+export(NodePath) var player
 
 func _ready():
+	assert(player != null)
+	player = get_node(player)
 	_retrieve_json()
 
 ## retrieves json
@@ -33,6 +38,7 @@ func _get_level_phrases(newDict):
 				levelPhrases = json[i]
 	# picks a random phrase from an array
 	currentPhrase = levelPhrases[(randi() % levelPhrases.size())]
+	$CurrentPhrase.text = currentPhrase
 	print(currentPhrase)
 
 ##
@@ -71,6 +77,14 @@ func _check_complete(checks):
 			if order == false:
 				return false
 		return true
+		
+func _check_accuracy(phrase : String):
+	var failures = 0
+	for i in range(0, phrase.length()):
+		if i >= currentPhrase.length() or phrase[i] != currentPhrase[i]:
+			failures += 1
+			
+	return int(max(failures, 0))
 
 ## text is stored and changed
 func _on_TextEdit_text_changed():
@@ -80,14 +94,20 @@ func _on_TextEdit_text_changed():
 	else:
 		storedPhrase = phrase
 	_parse_text(phrase);
-	pass
+	
+	var failures = _check_accuracy(phrase)
+	player.lift_percent = float(phrase.length() - failures) / float(currentPhrase.length())
 
 ## On click of enter it checks if its success or failure
 func _on_TextEdit__on_submit():
 	if _check_complete(_parse_text(storedPhrase)):
 		print("Success!")
+		player.lift_success()
 	else:
 		print("Failure")
+		player.lift_failure()
+	player.arm_size += 1.0 / total_phrases
 	currentPhrase = levelPhrases[(randi() % levelPhrases.size())]
+	$CurrentPhrase.text = currentPhrase
 	print(currentPhrase)
 	pass
