@@ -8,10 +8,12 @@
 script = ExtResource( 2 )
 
 [node name="ArmR" type="BoneAttachment" parent="Armature/Skeleton" index="1"]
-transform = Transform( -1.49012e-07, 0.996194, -0.0871554, -0.847507, -0.0462607, -0.528764, -0.530784, 0.0738649, 0.844282, 0.8, 1.18976, -0.660152 )
+transform = Transform( 1.34706e-07, 5.96046e-08, -1, -1.18416e-07, 1, -2.98023e-08, 1, -9.23705e-15, -2.84217e-15, 1.2, 1.4, -5.08987e-14 )
 bone_name = "forearm_r"
 
 [node name="Spatial" type="Spatial" parent="Armature/Skeleton/ArmR" index="0"]
 
 [node name="Bar" parent="Armature/Skeleton/ArmR/Spatial" index="0" instance=ExtResource( 3 )]
 transform = Transform( -7.98565e-08, -0.984808, -0.173649, 0.996195, -0.0151343, 0.0858313, -0.0871558, -0.172988, 0.98106, 0, -0.895592, -0.921646 )
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="." index="2"]
