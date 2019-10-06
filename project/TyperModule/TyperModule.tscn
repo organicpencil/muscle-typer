@@ -1,9 +1,10 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene load_steps=9 format=2]
 
 [ext_resource path="res://TyperModule/TyperCapture.gd" type="Script" id=1]
 [ext_resource path="res://TyperModule/TextConsole.gd" type="Script" id=2]
 [ext_resource path="res://TyperModule/Fonts/BrassMono/regular.otf" type="DynamicFontData" id=3]
-[ext_resource path="res://player/player.tscn" type="PackedScene" id=4]
+[ext_resource path="res://TyperModule/cracked_screen.png" type="Texture" id=4]
+[ext_resource path="res://player/player.tscn" type="PackedScene" id=5]
 
 [sub_resource type="DynamicFontData" id=1]
 font_path = "res://TyperModule/Fonts/BrassMono/regular.otf"
@@ -53,7 +54,14 @@ margin_right = 270.0
 margin_bottom = -66.0
 custom_fonts/font = SubResource( 3 )
 
-[node name="Player" parent="." instance=ExtResource( 4 )]
+[node name="Crack" type="TextureRect" parent="CanvasLayer"]
+visible = false
+anchor_right = 1.0
+anchor_bottom = 1.0
+texture = ExtResource( 4 )
+stretch_mode = 4
+
+[node name="Player" parent="." instance=ExtResource( 5 )]
 
 [node name="Camera" type="Camera" parent="."]
 transform = Transform( -1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 3.7, -28 )
