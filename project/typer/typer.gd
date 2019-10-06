@@ -7,8 +7,8 @@ export(NodePath) var line_edit # Hide this offscreen
 export(NodePath) var timer
 export(NodePath) var timer_progress
 
-enum {STATE_PLAYING, STATE_WIN, STATE_LOSE}
-var game_state = STATE_PLAYING
+enum {STATE_PLAYING, STATE_WIN, STATE_LOSE, STATE_PREGAME}
+var game_state = STATE_PREGAME
 
 var messages_processed = 0
 var total_messages # Int set by _retrieve_json
@@ -36,8 +36,6 @@ func _ready():
 	timer = get_node(timer)
 	timer_progress = get_node(timer_progress)
 
-	input_label.bbcode_text = " [color=#ffffff]#[/color]"
-
 	line_edit.connect("text_changed", self, "_on_text_changed")
 	line_edit.connect("text_entered", self, "_on_text_entered")
 	line_edit.grab_focus()
@@ -45,7 +43,14 @@ func _ready():
 	timer.connect("timeout", self, "_on_timeout")
 	
 	_retrieve_json()
-	next_message()
+	
+	Global.connect("start", self, "_on_start")
+	
+func _on_start():
+	if game_state != STATE_PLAYING:
+		game_state = STATE_PLAYING
+		input_label.bbcode_text = " [color=#ffffff]#[/color]"
+		next_message()
 	
 func _retrieve_json():
 	# Check if there is a typer file
@@ -75,6 +80,7 @@ func next_message():
 	
 func _on_text_changed(input_text):
 	if game_state != STATE_PLAYING:
+		line_edit.text = ""
 		return
 		
 	var bbcode = " "
