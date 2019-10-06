@@ -168,7 +168,9 @@ func _on_text_entered(input_text):
 func _process(delta):
 	if game_state == STATE_WIN:
 		timer_progress.value = 0
-	else:
+	elif game_state == STATE_PLAYING:
 		timer_progress.value = ((timer.wait_time - timer.time_left) / timer.wait_time) * 100.0
+	else:
+		timer_progress.value = 0
 		
 	emit_signal("timeout_strength", float(timer_progress.value) / 100.0)

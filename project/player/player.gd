@@ -8,6 +8,7 @@ var _delayed_signal = false
 var _weights = 0
 var _lift_percent_lerp = 0.0
 var _arm_size_lerp = 0.0
+var _shakiness = 0.0
 
 ## Important vars
 #var lift_speed = 0.0 # Set me to determine lifting speed. Normal = 1.0
@@ -67,6 +68,9 @@ func _on_lift_failure():
 func _on_lift_progress(percent):
 	lift_percent = percent
 	
+func _handle_timeout_strength(timeout):
+	_shakiness = timeout
+	
 func _process(delta):
 	_lift_percent_lerp = lerp(_lift_percent_lerp, lift_percent, 0.1)
 	_arm_size_lerp = min(lerp(_arm_size_lerp, arm_size, 0.01), 1.0)
@@ -89,3 +93,6 @@ func _process(delta):
 			
 			
 	_anim_grow.seek(_arm_size_lerp * 4.0) # The animation is 4 seconds long
+	
+	var x = rand_range(-_shakiness, _shakiness) * 0.2
+	rotation.x = lerp(rotation.x, x, 0.2)
