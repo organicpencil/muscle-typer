@@ -15,15 +15,7 @@ var positive_responses = ["Good", "Excellent", "Nice", "Superb"]
 
 export(NodePath) var player
 
-var grunts = [preload("res://audio/grunt_sound_pack_1/grunt_1.wav"),
-	preload("res://audio/grunt_sound_pack_1/grunt_2.wav"),
-	preload("res://audio/grunt_sound_pack_1/grunt_3.wav"),
-	preload("res://audio/grunt_sound_pack_1/grunt_4.wav"),
-	preload("res://audio/grunt_sound_pack_1/grunt_5.wav"),
-	preload("res://audio/grunt_sound_pack_1/grunt_6.wav"),
-	preload("res://audio/grunt_sound_pack_1/grunt_7.wav"),
-	preload("res://audio/grunt_sound_pack_1/grunt_8.wav"),
-	preload("res://audio/grunt_sound_pack_1/grunt_9.wav"),]
+var grunts = []
 
 func _ready():
 	assert(player != null)
