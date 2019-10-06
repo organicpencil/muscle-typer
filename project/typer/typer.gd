@@ -4,6 +4,8 @@ export(NodePath) var status_label
 export(NodePath) var message_label
 export(NodePath) var input_label
 export(NodePath) var line_edit # Hide this offscreen
+export(NodePath) var timer
+export(NodePath) var timer_progress
 
 enum {STATE_PLAYING, STATE_WIN, STATE_LOSE}
 var game_state = STATE_PLAYING
@@ -21,21 +23,23 @@ var next_status = 0
 
 var all_phrases # Array loaded from json
 
+signal timeout_value # emits float range 0-100 for timeout progress
+
 func _ready():
-	assert(status_label)
 	status_label = get_node(status_label)
-	assert(message_label)
 	message_label = get_node(message_label)
-	assert(input_label)
 	input_label = get_node(input_label)
-	assert(line_edit)
 	line_edit = get_node(line_edit)
+	timer = get_node(timer)
+	timer_progress = get_node(timer_progress)
+
+	input_label.bbcode_text = " [color=#ffffff]#[/color]"
 
 	line_edit.connect("text_changed", self, "_on_text_changed")
 	line_edit.connect("text_entered", self, "_on_text_entered")
 	line_edit.grab_focus()
 	
-	input_label.bbcode_text = "[color=#ffffff]#[/color]"
+	timer.connect("timeout", self, "_on_timeout")
 	
 	_retrieve_json()
 	next_message()
@@ -50,21 +54,26 @@ func _retrieve_json():
 	all_phrases = parse.result
 	total_messages = all_phrases.size()
 	file.close()
+	
+func _on_timeout():
+	_on_text_entered(null)
+	# TODO - Drop or something
 
 func next_message():
 	if !all_phrases.size():
-		message_label.bbcode_text = "Out o' content"
+		message_label.bbcode_text = " Out o' content. This shouldn't happen. Sort of."
 		return false
 		
 	message_text = all_phrases.pop_front()
-	message_label.bbcode_text = "[color=#3399ff]%s[/color]" % message_text
+	message_label.bbcode_text = " [color=#3399ff]%s[/color]" % message_text
+	timer.start()
 	return true
 	
 func _on_text_changed(input_text):
 	if game_state != STATE_PLAYING:
 		return
 		
-	var bbcode = ""
+	var bbcode = " "
 	for i in range(0, input_text.length()):
 		if (i < message_text.length()) and (input_text[i] == message_text[i]):
 			bbcode += "[color=#66ff33]%s[/color]" % input_text[i]
@@ -83,6 +92,7 @@ func _on_text_entered(input_text):
 		return
 		
 	messages_processed += 1
+	timer.stop()
 	
 	if input_text == message_text:
 		var prefix = good_prefixes[next_prefix]
@@ -97,34 +107,46 @@ func _on_text_entered(input_text):
 		if prefix:
 			status = prefix + " " + status.to_lower()
 		
-		status_label.bbcode_text = "[color=#66ff33]%s[/color]" % status
-		
 		if messages_processed + 1 == total_messages:
-			status_label.bbcode_text += "\n[color=#66ff33]One more to go![/color]"
+			status_label.bbcode_text = " [color=#66ff33]One more to go![/color]"
 		elif messages_processed == total_messages:
-			status_label.bbcode_text += "\n[color=#66ff33]Victory[/color]"
+			status_label.bbcode_text = " [color=#66ff33]Victory[/color]"
 			game_state = STATE_WIN
 			return
+		else:
+			status_label.bbcode_text = " [color=#66ff33]%s[/color]" % status
 		
 	else:
 		mistakes += 1
-		status_label.bbcode_text = "[color=#ff3300]Mistake! %d/%d[/color]" % [mistakes, max_mistakes]
+		
+		if input_text == null:
+			status_label.bbcode_text = " [color=#ff3300]Too slow, ye dropped it. %d/%d[/color]" % [mistakes, max_mistakes]
+		else:
+			status_label.bbcode_text = " [color=#ff3300]Mistake! %d/%d[/color]" % [mistakes, max_mistakes]
 		
 		if mistakes + 1 == max_mistakes:
-			status_label.bbcode_text += "\n[color=#ff3300]Last chance, buddy.[/color]"
+			status_label.bbcode_text += "\n [color=#ff3300]Last chance, buddy.[/color]"
 			
 		elif mistakes == max_mistakes:
 			game_state = STATE_LOSE
-			status_label.bbcode_text += "\n[color=#ff3300]Game over[/color]"
+			status_label.bbcode_text += "\n [color=#ff3300]Game over[/color]"
 			return
 			
 		if messages_processed + 1 == total_messages:
-			status_label.bbcode_text += "\n[color=#66ff33]... but only one more to go[/color]"
+			status_label.bbcode_text += "\n [color=#66ff33]... but only one more to go[/color]"
 		elif messages_processed == total_messages:
-			status_label.bbcode_text += "\n[color=#66ff33]... but you still won![/color]"
+			status_label.bbcode_text += "\n [color=#66ff33]Still good enough. Congrats.[/color]"
 			game_state = STATE_WIN
 			return
 		
 	line_edit.text = ""
 	input_label.bbcode_text = ""
 	next_message()
+	
+func _process(delta):
+	if game_state == STATE_WIN:
+		timer_progress.value = 0
+	else:
+		timer_progress.value = ((timer.wait_time - timer.time_left) / timer.wait_time) * 100.0
+		
+	emit_signal("timeout_value", timer_progress.value)
