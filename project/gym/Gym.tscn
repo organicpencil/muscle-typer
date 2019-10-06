@@ -37,6 +37,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 texture = ExtResource( 6 )
 stretch_mode = 4
+[connection signal="timeout_strength" from="Typer" to="Player" method="_handle_timeout_strength"]
 [connection signal="typing_failed" from="Typer" to="Player" method="_on_lift_failure"]
 [connection signal="typing_finished" from="Typer" to="Player" method="_on_lift_success"]
 [connection signal="typing_progress" from="Typer" to="Player" method="_on_lift_progress"]
