@@ -9,6 +9,7 @@ enum {STATE_PLAYING, STATE_WIN, STATE_LOSE}
 var game_state = STATE_PLAYING
 
 var messages_processed = 0
+var total_messages # Int set by _retrieve_json
 var mistakes = 0
 var max_mistakes = 5
 var message_text = ""
@@ -17,6 +18,8 @@ var good_prefixes = [null, "Totally", "Absolutely"]
 var good_statuses = ["Good", "Nice", "Superb", "Excellent", "Fantastic", "Radical", "Wicked", "Bodacious"]
 var next_prefix = 0
 var next_status = 0
+
+var all_phrases # Array loaded from json
 
 func _ready():
 	assert(status_label)
@@ -34,12 +37,28 @@ func _ready():
 	
 	input_label.bbcode_text = "[color=#ffffff]#[/color]"
 	
-	set_message("a")
-	#set_message(get_next_message())
+	_retrieve_json()
+	next_message()
+	
+func _retrieve_json():
+	# Check if there is a typer file
+	var file = File.new()
+	assert(file.file_exists("res://typer/phrases.json"))
+	file.open("res://typer/phrases.json", file.READ)
+	var json = file.get_as_text()
+	var parse = JSON.parse(json)
+	all_phrases = parse.result
+	total_messages = all_phrases.size()
+	file.close()
 
-func set_message(message):
-	message_text = message
-	message_label.bbcode_text = "[color=#3399ff]%s[/color]" % message
+func next_message():
+	if !all_phrases.size():
+		message_label.bbcode_text = "Out o' content"
+		return false
+		
+	message_text = all_phrases.pop_front()
+	message_label.bbcode_text = "[color=#3399ff]%s[/color]" % message_text
+	return true
 	
 func _on_text_changed(input_text):
 	if game_state != STATE_PLAYING:
@@ -59,6 +78,8 @@ func _on_text_entered(input_text):
 	if game_state != STATE_PLAYING:
 		return
 		
+	messages_processed += 1
+	
 	if input_text == message_text:
 		var prefix = good_prefixes[next_prefix]
 		var status = good_statuses[next_status]
@@ -74,10 +95,12 @@ func _on_text_entered(input_text):
 		
 		status_label.bbcode_text = "[color=#66ff33]%s[/color]" % status
 		
-		#if messages_processed + 1 == total_messages:
-		#	status_label.bbcode_text += "\n[color=#66ff33]One more to go![/color]"
-		#elif messages_processed == total_messages:
-		#	status_label.bbcode_text += "\n[color=#66ff33]Victory.[/color]"
+		if messages_processed + 1 == total_messages:
+			status_label.bbcode_text += "\n[color=#66ff33]One more to go![/color]"
+		elif messages_processed == total_messages:
+			status_label.bbcode_text += "\n[color=#66ff33]Victory[/color]"
+			game_state = STATE_WIN
+			return
 		
 	else:
 		mistakes += 1
@@ -88,8 +111,16 @@ func _on_text_entered(input_text):
 			
 		elif mistakes == max_mistakes:
 			game_state = STATE_LOSE
-			status_label.bbcode_text += "\n[color=#ff3300]Game over.[/color]"
+			status_label.bbcode_text += "\n[color=#ff3300]Game over[/color]"
+			return
+			
+		if messages_processed + 1 == total_messages:
+			status_label.bbcode_text += "\n[color=#66ff33]... but only one more to go[/color]"
+		elif messages_processed == total_messages:
+			status_label.bbcode_text += "\n[color=#66ff33]... but you still won![/color]"
+			game_state = STATE_WIN
 			return
 		
 	line_edit.text = ""
 	input_label.bbcode_text = ""
+	next_message()
