@@ -108,7 +108,9 @@ func _on_text_entered(input_text):
 	messages_processed += 1
 	timer.stop()
 	
+	var success = false
 	if input_text == message_text:
+		success = true
 		emit_signal("typing_finished")
 		var prefix = good_prefixes[next_prefix]
 		var status = good_statuses[next_status]
@@ -157,7 +159,9 @@ func _on_text_entered(input_text):
 		line_edit.text = ""
 		input_label.bbcode_text = ""
 		message_label.bbcode_text = ""
-		yield(get_tree().create_timer(1.5), "timeout")
+		if !success:
+			yield(get_tree().create_timer(1.5), "timeout")
+			
 		if game_state == STATE_BETWEEN:
 			game_state = STATE_PLAYING
 			next_message()
