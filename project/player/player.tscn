@@ -4,11 +4,14 @@
 [ext_resource path="res://player/player.gd" type="Script" id=2]
 [ext_resource path="res://player/bar.dae" type="PackedScene" id=3]
 
-[node name="Player" instance=ExtResource( 1 )]
+[node name="Player" index="0" instance=ExtResource( 1 )]
 script = ExtResource( 2 )
 
+[node name="Skeleton" parent="Armature" index="0"]
+bones/11/bound_children = [ NodePath("ArmR") ]
+
 [node name="ArmR" type="BoneAttachment" parent="Armature/Skeleton" index="1"]
-transform = Transform( 0, 0.996194, -0.0871557, -0.533297, -0.0737274, -0.842709, -0.845928, 0.0464799, 0.531268, 0.8, 1.6928, -0.627908 )
+transform = Transform( -1.49012e-07, 0.996194, -0.0871554, -0.847507, -0.0462607, -0.528764, -0.530784, 0.0738649, 0.844282, 0.8, 1.18976, -0.660152 )
 bone_name = "forearm_r"
 
 [node name="Spatial" type="Spatial" parent="Armature/Skeleton/ArmR" index="0"]

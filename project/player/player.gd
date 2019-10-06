@@ -65,7 +65,7 @@ func _process(delta):
 	elif _anim_lift.current_animation == "lift_up":
 		_anim_lift.seek(_lift_percent_lerp * 0.7)
 		
-		if !_delayed_signal and _anim_lift.current_animation_position > 0.5:
+		if !_delayed_signal and _anim_lift.current_animation_position > 0.3:
 			_delayed_signal = true
 			emit_signal("delayed_grunt")
 			
