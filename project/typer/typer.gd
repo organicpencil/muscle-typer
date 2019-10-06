@@ -123,6 +123,7 @@ func _on_text_entered(input_text):
 		
 		if messages_processed + 1 == total_messages:
 			status_label.bbcode_text = " [color=#66ff33]One more to go![/color]"
+			Global.emit_signal("crack")
 		elif messages_processed == total_messages:
 			status_label.bbcode_text = " [color=#66ff33]Victory[/color]"
 			game_state = STATE_WIN
@@ -147,6 +148,7 @@ func _on_text_entered(input_text):
 			
 		elif messages_processed + 1 == total_messages:
 			status_label.bbcode_text += "\n [color=#66ff33]... but only one more to go[/color]"
+			Global.emit_signal("crack")
 		elif messages_processed == total_messages:
 			status_label.bbcode_text += "\n [color=#66ff33]Still good enough. Congrats.[/color]"
 			game_state = STATE_WIN
