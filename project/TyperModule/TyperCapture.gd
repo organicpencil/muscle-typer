@@ -5,7 +5,8 @@ var levelPhrases
 var currentPhrase
 var storedPhrase
 var level = 1
-var total_phrases = 30
+var phrases_complete = 0
+var total_phrases = 5 # TODO - Pull me from the json file
 var next_grunt = 0
 var failures = 0
 const MAX_FAILURES = 5
@@ -126,12 +127,20 @@ func _on_TextEdit__on_submit():
 	if game_over:
 		return
 		
+	phrases_complete += 1
+		
 	if _check_complete(_parse_text(storedPhrase)):
 		print("Success!")
 		player.lift_success()
 		positive_responses.shuffle()
 		$Status.text = positive_responses[0]
 		$Status.modulate = Color(0, 1, 0, 1)
+		
+		if phrases_complete + 1 == total_phrases:
+			$Status.text += "\nJust one more!!!"
+		elif phrases_complete == total_phrases:
+			$Status.text = "Victory. You are now\nthe stroncjkest of huamins"
+			game_over = true
 	else:
 		print("Failure")
 		failures += 1
