@@ -12,7 +12,7 @@ dest_files=[ "res://.import/weight.dae-c4b6f0330173d4fee691e3f5ecabb05e.scn" ]
 [params]
 
 nodes/root_type="Spatial"
-nodes/root_name="Scene Root"
+nodes/root_name="Weight"
 nodes/root_scale=1.0
 nodes/custom_script=""
 nodes/storage=0
