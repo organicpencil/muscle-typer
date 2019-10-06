@@ -29,6 +29,8 @@ var next_grunt = 0
 func _ready():
 	bar = get_node(bar)
 	
+	$ShakeSound.connect("finished", $ShakeSound, "play")
+	
 	_anim_lift = $AnimationPlayer
 	_anim_grow = _anim_lift.duplicate()
 	add_child(_anim_grow)
@@ -51,12 +53,16 @@ func add_weight():
 	_weights += 1
 	
 func _on_lift_success():
+	$ShakeSound.volume_db = -80.0
+	
 	_lifting = false
 	_anim_lift.play("lift_down", 0.2)
 	lift_percent = 0.0
 	arm_size += growth_delta
 	
 func _on_lift_failure():
+	$ShakeSound.volume_db = -80.0
+	
 	var dropped = BAR_DROPPED_SCENE.instance()
 	if lift_percent >= 1.0:
 		dropped.fully_charged = 1.0
@@ -80,6 +86,8 @@ func _on_lift_progress(percent):
 	
 func _handle_timeout_strength(timeout):
 	_shakiness = timeout
+	
+	$ShakeSound.volume_db = -40.0 + 40.0 * timeout
 	
 func _process(delta):
 	_lift_percent_lerp = lerp(_lift_percent_lerp, lift_percent, 0.1)
