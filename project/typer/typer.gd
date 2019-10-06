@@ -7,7 +7,7 @@ export(NodePath) var line_edit # Hide this offscreen
 export(NodePath) var timer
 export(NodePath) var timer_progress
 
-enum {STATE_PLAYING, STATE_WIN, STATE_LOSE, STATE_PREGAME}
+enum {STATE_PLAYING, STATE_WIN, STATE_LOSE, STATE_PREGAME, STATE_BETWEEN}
 var game_state = STATE_PREGAME
 
 var messages_processed = 0
@@ -73,6 +73,7 @@ func next_message():
 		print("This shouldn't happen")
 		return false
 		
+	input_label.bbcode_text = " [color=#ffffff]#[/color]"
 	message_text = all_phrases.pop_front()
 	message_label.bbcode_text = " [color=#3399ff]%s[/color]" % message_text
 	timer.start()
@@ -125,7 +126,6 @@ func _on_text_entered(input_text):
 		elif messages_processed == total_messages:
 			status_label.bbcode_text = " [color=#66ff33]Victory[/color]"
 			game_state = STATE_WIN
-			return
 		else:
 			status_label.bbcode_text = " [color=#66ff33]%s[/color]" % status
 		
@@ -144,18 +144,22 @@ func _on_text_entered(input_text):
 		elif mistakes == max_mistakes:
 			game_state = STATE_LOSE
 			status_label.bbcode_text += "\n [color=#ff3300]Game over[/color]"
-			return
 			
-		if messages_processed + 1 == total_messages:
+		elif messages_processed + 1 == total_messages:
 			status_label.bbcode_text += "\n [color=#66ff33]... but only one more to go[/color]"
 		elif messages_processed == total_messages:
 			status_label.bbcode_text += "\n [color=#66ff33]Still good enough. Congrats.[/color]"
 			game_state = STATE_WIN
-			return
 		
-	line_edit.text = ""
-	input_label.bbcode_text = ""
-	next_message()
+	if game_state == STATE_PLAYING:
+		game_state = STATE_BETWEEN
+		line_edit.text = ""
+		input_label.bbcode_text = ""
+		message_label.bbcode_text = ""
+		yield(get_tree().create_timer(2.0), "timeout")
+		if game_state == STATE_BETWEEN:
+			game_state = STATE_PLAYING
+			next_message()
 	
 func _process(delta):
 	if game_state == STATE_WIN:
