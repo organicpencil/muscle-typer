@@ -64,12 +64,14 @@ func _on_lift_success():
 	$ShakeSound.volume_db = -80.0
 
 	_lifting = false
-	_anim_lift.play("DownLift", 0.2)
+	_anim_lift.play("LiftDown", 0.2)
 	lift_percent = 0.0
 	arm_size += growth_delta
 
 func _on_lift_failure():
 	$ShakeSound.volume_db = -80.0
+	
+	_lifting = false
 
 	var dropped = BAR_DROPPED_SCENE.instance()
 	var dropped2 = BAR_DROPPED_SCENE.instance()
@@ -95,7 +97,7 @@ func _on_lift_failure():
 	dropped.connect("tree_exiting", bar, "show")
 	dropped2.connect("tree_exiting", bell, "show")
 
-	_anim_lift.play("DownLift", 0.2)
+	_anim_lift.play("Drop", 0.2, 2.0)
 	lift_percent = 0.0
 	arm_size += growth_delta
 
@@ -114,15 +116,17 @@ func _process(delta):
 	if !_anim_lift.is_playing():
 		_lifting = true
 		_delayed_signal = false
-		_anim_lift.play("Lift", -1, 0.0)
+		_anim_lift.play("Lift", 0.8, 0.0)
 
-		if !_delayed_signal and _anim_lift.current_animation_position > 0.3:
-			_delayed_signal = true
-			emit_signal("delayed_grunt") # Probably does nothing, moved code here
-			get_node("AudioStreamPlayer").stream = Global.grunts[next_grunt]
-			get_node("AudioStreamPlayer").play()
-			if Global.grunts.size() - 1 > next_grunt:
-				next_grunt += 1
+	if _lifting and !_delayed_signal and _anim_lift.current_animation_position > 0.3:
+		_delayed_signal = true
+		emit_signal("delayed_grunt") # Probably does nothing, moved code here
+		get_node("AudioStreamPlayer").stream = Global.grunts[next_grunt]
+		get_node("AudioStreamPlayer").play()
+		if Global.grunts.size() - 1 > next_grunt:
+			next_grunt += 1
+		else:
+			next_grunt -= 1
 
 	if _anim_lift.is_playing() and _anim_lift.current_animation == "Lift":
 		_anim_lift.seek(_lift_percent_lerp)

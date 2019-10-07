@@ -23,14 +23,19 @@ surfaces/0 = {
 "vertex_count": 1208
 }
 
-[node name="player2" instance=ExtResource( 1 )]
+[node name="player2" index="0" instance=ExtResource( 1 )]
 transform = Transform( -4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 0, 0, 0 )
 script = ExtResource( 2 )
 bar = NodePath("Armature/Skeleton/HandRight/Bar")
 bell = NodePath("Armature/Skeleton/HandLeft/Bell")
 
+[node name="Skeleton" parent="Armature" index="0"]
+bones/11/bound_children = [ NodePath("Head") ]
+bones/19/bound_children = [ NodePath("HandRight") ]
+bones/33/bound_children = [ NodePath("HandLeft") ]
+
 [node name="Head" type="BoneAttachment" parent="Armature/Skeleton" index="0"]
-transform = Transform( 1, 0, 0, 0, 0, -1, 0, 1, 0, 0, 1.92744, 0 )
+transform = Transform( 1, 8.52651e-14, 1.69407e-21, 2.84217e-14, 1.19209e-07, -1, -4.26326e-14, 1, 2.84217e-14, -5.08141e-21, 2.41514, -3.97531e-14 )
 bone_name = "Head"
 
 [node name="Eyes" type="MeshInstance" parent="Armature/Skeleton/Head" index="0"]
@@ -39,18 +44,18 @@ mesh = SubResource( 1 )
 material/0 = null
 
 [node name="HandRight" type="BoneAttachment" parent="Armature/Skeleton" index="1"]
-transform = Transform( -0.991941, 0.126087, -0.0124683, -0.126701, -0.987087, 0.0980107, 5.05224e-05, 0.0988006, 0.995107, 0.0344699, 0.688702, -2.48425 )
+transform = Transform( 0.637477, -0.417558, -0.647508, -0.340268, -0.906587, 0.249632, -0.69126, 0.0611923, -0.72001, -0.976606, 0.232304, 0.866615 )
 bone_name = "Fingers.R"
 
 [node name="Bar" parent="Armature/Skeleton/HandRight" index="0" instance=ExtResource( 4 )]
 
 [node name="HandLeft" type="BoneAttachment" parent="Armature/Skeleton" index="2"]
-transform = Transform( -1, 3.89414e-07, 1.4404e-14, 3.87539e-07, 0.995185, 0.0980107, 3.81669e-08, 0.0980109, -0.995185, 1.31439e-07, 0.688702, 2.48444 )
+transform = Transform( 0.968501, 0.194075, 0.156012, 0.192782, -0.980959, 0.0235257, 0.157607, 0.00729126, -0.987475, 0.996658, 0.207481, 0.845583 )
 bone_name = "Fingers.L"
 
 [node name="Bell" parent="Armature/Skeleton/HandLeft" index="0" instance=ExtResource( 4 )]
 
-[node name="Human" parent="Armature/Skeleton" index="4"]
+[node name="Human" parent="Armature/Skeleton" index="3"]
 material/0 = ExtResource( 5 )
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="." index="2"]
