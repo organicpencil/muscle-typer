@@ -9,6 +9,8 @@
 [ext_resource path="res://gym/cracked_screen.png" type="Texture" id=7]
 [ext_resource path="res://Gym Essential Models/BenchPress.tscn" type="PackedScene" id=8]
 [ext_resource path="res://Gym Essential Models/Creatine.tscn" type="PackedScene" id=9]
+[ext_resource path="res://gym/concrete.material" type="Material" id=10]
+[ext_resource path="res://player/player2.tscn" type="PackedScene" id=11]
 
 [sub_resource type="BoxShape" id=1]
 extents = Vector3( 10, 1, 10 )
@@ -31,13 +33,14 @@ shape = SubResource( 1 )
 
 [node name="MeshInstance" type="MeshInstance" parent="StaticBody"]
 mesh = SubResource( 2 )
-material/0 = null
+material/0 = ExtResource( 10 )
 
-[node name="Player" parent="." instance=ExtResource( 4 )]
+[node name="Player" parent="." instance=ExtResource( 5 )]
+visible = false
 
 [node name="Position3D" type="Position3D" parent="."]
 transform = Transform( -1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 0, 0 )
-script = ExtResource( 5 )
+script = ExtResource( 6 )
 
 [node name="Camera" type="Camera" parent="Position3D"]
 transform = Transform( 1, 0, 0, 0, 0.981023, 0.193892, 0, -0.193892, 0.981023, 0, 5.77, 16 )
@@ -52,6 +55,13 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 texture = ExtResource( 7 )
 stretch_mode = 4
+
+[node name="player2" parent="." instance=ExtResource( 11 )]
+transform = Transform( -4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 0, 3.37707, 0 )
+[connection signal="timeout_strength" from="Typer" to="player2" method="_handle_timeout_strength"]
+[connection signal="typing_failed" from="Typer" to="player2" method="_on_lift_failure"]
+[connection signal="typing_finished" from="Typer" to="player2" method="_on_lift_success"]
+[connection signal="typing_progress" from="Typer" to="player2" method="_on_lift_progress"]
 
 [node name="Bench Presses" type="Spatial" parent="."]
 editor/display_folded = true

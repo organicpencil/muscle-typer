@@ -5,12 +5,9 @@
 [ext_resource path="res://player/bar.dae" type="PackedScene" id=3]
 [ext_resource path="res://player/shake_3.wav" type="AudioStream" id=4]
 
-[node name="Player" index="0" instance=ExtResource( 1 )]
+[node name="Player" instance=ExtResource( 1 )]
 script = ExtResource( 2 )
 bar = NodePath("Armature/Skeleton/ArmR/Spatial/Bar")
-
-[node name="Skeleton" parent="Armature" index="0"]
-bones/11/bound_children = [ NodePath("ArmR") ]
 
 [node name="ArmR" type="BoneAttachment" parent="Armature/Skeleton" index="1"]
 transform = Transform( 1.34706e-07, 5.96046e-08, -1, -1.18416e-07, 1, -2.98023e-08, 1, -9.23705e-15, -2.84217e-15, 1.2, 1.4, -5.08987e-14 )
