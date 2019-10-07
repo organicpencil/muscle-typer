@@ -26,6 +26,7 @@ const WEIGHT_SCENE = preload("weight.dae")
 const BAR_DROPPED_SCENE = preload("bar_dropped.tscn")
 
 var next_grunt = 0
+onready var starting_rotation = rotation
 
 func _ready():
 	bar = get_node(bar)
@@ -40,23 +41,23 @@ func _ready():
 #	_anim_grow.play("grow", -1, 0.0)
 
 	add_weight()
-	add_weight()
-	add_weight()
+	#add_weight()
+	#add_weight()
 
 func add_weight():
 	var weight = WEIGHT_SCENE.instance()
 	var weight2 = WEIGHT_SCENE.instance()
 	bar.add_child(weight)
 	bell.add_child(weight2)
-	weight.translation = Vector3(1.2 + 0.3 * _weights, 0.0, 0.0)
-	weight2.translation = Vector3(1.2 + 0.3 * _weights, 0.0, 0.0)
+	weight.translation = Vector3(0.3 + 0.1 * _weights, 0.0, 0.0)
+	weight2.translation = Vector3(0.3 + 0.1 * _weights, 0.0, 0.0)
 
 	weight = WEIGHT_SCENE.instance()
 	weight2 = WEIGHT_SCENE.instance()
 	bar.add_child(weight)
 	bell.add_child(weight2)
-	weight.translation = Vector3(-1.2 - 0.3 * _weights, 0.0, 0.0)
-	weight2.translation = Vector3(-1.2 - 0.3 * _weights, 0.0, 0.0)
+	weight.translation = Vector3(-0.3 - 0.1 * _weights, 0.0, 0.0)
+	weight2.translation = Vector3(-0.3 - 0.1 * _weights, 0.0, 0.0)
 	_weights += 1
 
 func _on_lift_success():
@@ -76,6 +77,7 @@ func _on_lift_failure():
 		dropped.fully_charged = 1.0
 
 	get_parent().add_child(dropped)
+	get_parent().add_child(dropped2)
 	dropped.global_transform = bar.global_transform
 	dropped2.global_transform = bell.global_transform
 	for c in bar.get_children():
@@ -84,7 +86,7 @@ func _on_lift_failure():
 			dropped.add_child(c2)
 
 	for c in bell.get_children():
-		if c.get_name() != "bell":
+		if c.get_name() != "bar":
 			var c2 = c.duplicate()
 			dropped2.add_child(c2)
 
@@ -122,8 +124,10 @@ func _process(delta):
 			if Global.grunts.size() - 1 > next_grunt:
 				next_grunt += 1
 
-
+	if _anim_lift.is_playing() and _anim_lift.current_animation == "Lift":
+		_anim_lift.seek(_lift_percent_lerp)
+		
 #	_anim_grow.seek(_arm_size_lerp * 4.0) # The animation is 4 seconds long
 
-	var x = rand_range(-_shakiness, _shakiness) * 0.2
-	rotation.y = lerp(x, rotation.y, 0.2)
+	var y = (rand_range(-_shakiness, _shakiness) * 0.2) + starting_rotation.y
+	rotation.y = lerp(y, rotation.y, 0.2)
