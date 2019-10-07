@@ -100,7 +100,7 @@ func _on_text_changed(input_text):
 	
 	if message_text.begins_with("That was"):
 		$StretchSound.play()
-		Global.emit_signal("crack")
+		#Global.emit_signal("crack")
 	
 func _on_text_entered(input_text):
 	if game_state != STATE_PLAYING:
