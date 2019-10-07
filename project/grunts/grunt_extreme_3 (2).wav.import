@@ -1,0 +1,21 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/grunt_extreme_3 (2).wav-c88ed09aa4db1cb008e24824d4ccf7bf.sample"
+
+[deps]
+
+source_file="res://grunts/grunt_extreme_3 (2).wav"
+dest_files=[ "res://.import/grunt_extreme_3 (2).wav-c88ed09aa4db1cb008e24824d4ccf7bf.sample" ]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=true
+edit/normalize=true
+edit/loop=false
+compress/mode=0
