@@ -1,0 +1,21 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/crt_motivation_6.wav-440ffd7c26cacbd822ade09afb66524c.sample"
+
+[deps]
+
+source_file="res://tv/sounds/crt_motivation_6.wav"
+dest_files=[ "res://.import/crt_motivation_6.wav-440ffd7c26cacbd822ade09afb66524c.sample" ]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=true
+edit/normalize=true
+edit/loop=false
+compress/mode=0

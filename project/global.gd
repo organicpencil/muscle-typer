@@ -6,6 +6,9 @@ var grunts = []
 
 signal start
 signal crack
+signal victory
+signal lose
+signal motivate
 
 func _ready():
 	load_grunts()
@@ -15,10 +18,15 @@ func _ready():
 	$AudioStreamPlayer.play()
 	$AudioStreamPlayer.connect("finished", $AudioStreamPlayer, "play")
 	
+	
 func victory():
 	$AudioStreamPlayer.stop()
 	$VictoryPlayer.play()
 	$VictoryPlayer.connect("finished", $VictoryPlayer, "play")
+	emit_signal("win")
+	
+func lose():
+	emit_signal("lose")
 	
 func load_grunts():
 	var dir = Directory.new()

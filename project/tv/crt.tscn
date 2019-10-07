@@ -1,4 +1,4 @@
-[gd_scene load_steps=28 format=2]
+[gd_scene load_steps=36 format=2]
 
 [ext_resource path="res://crt.gd" type="Script" id=1]
 [ext_resource path="res://tv/beige.material" type="Material" id=2]
@@ -12,6 +12,14 @@
 [ext_resource path="res://tv/untitled2.webm" type="VideoStream" id=10]
 [ext_resource path="res://tv/VideoPlayer.gd" type="Script" id=11]
 [ext_resource path="res://tv/shader/white.png" type="Texture" id=12]
+[ext_resource path="res://tv/sounds/crt_motivation_1.wav" type="AudioStream" id=13]
+[ext_resource path="res://tv/sounds/crt_motivation_6.wav" type="AudioStream" id=14]
+[ext_resource path="res://tv/sounds/crt_motivation_11.wav" type="AudioStream" id=15]
+[ext_resource path="res://tv/sounds/crt_motivation_5.wav" type="AudioStream" id=16]
+[ext_resource path="res://tv/sounds/crt_motivation_7.wav" type="AudioStream" id=17]
+[ext_resource path="res://tv/sounds/crt_motivation_8.wav" type="AudioStream" id=18]
+[ext_resource path="res://tv/sounds/crt_motivation_9.wav" type="AudioStream" id=19]
+[ext_resource path="res://tv/sounds/crt_motivation_10.wav" type="AudioStream" id=20]
 
 [sub_resource type="ArrayMesh" id=1]
 resource_name = "Cube"
@@ -445,3 +453,38 @@ margin_right = 1024.0
 margin_bottom = 600.0
 texture = ExtResource( 12 )
 expand = true
+
+[node name="LoseSound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 13 )
+
+[node name="VictorySound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 14 )
+
+[node name="Motivation2" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 15 )
+
+[node name="Motivation3" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 13 )
+
+[node name="Motivation4" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 15 )
+
+[node name="Motivation5" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 16 )
+
+[node name="Motivation6" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 15 )
+
+[node name="Motivation7" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 17 )
+
+[node name="Motivation8" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 18 )
+
+[node name="Motivation9" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 19 )
+
+[node name="Motivation10" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 20 )
+
+[node name="Timer" type="Timer" parent="."]

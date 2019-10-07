@@ -115,6 +115,7 @@ func _on_text_entered(input_text):
 	
 	var success = false
 	if input_text == message_text:
+		Global.emit_signal("motivate")
 		success = true
 		emit_signal("typing_finished")
 		var prefix = good_prefixes[next_prefix]
@@ -153,6 +154,7 @@ func _on_text_entered(input_text):
 		elif mistakes == max_mistakes:
 			game_state = STATE_LOSE
 			status_label.bbcode_text += "\n [color=#ff3300]Game over[/color]"
+			Global.lose()
 			
 		elif messages_processed + 1 == total_messages:
 			status_label.bbcode_text += "\n [color=#66ff33]... but only one more to go[/color]"
