@@ -10,6 +10,8 @@ signal crack
 func _ready():
 	load_grunts()
 	connect("crack", self, "_on_crack")
+	$AudioStreamPlayer.play()
+	$AudioStreamPlayer.connect("finished", $AudioStreamPlayer, "play")
 	
 func load_grunts():
 	var dir = Directory.new()
