@@ -10,6 +10,8 @@ signal crack
 func _ready():
 	load_grunts()
 	connect("crack", self, "_on_crack")
+	
+	yield(get_tree(), "idle_frame")
 	$AudioStreamPlayer.play()
 	$AudioStreamPlayer.connect("finished", $AudioStreamPlayer, "play")
 	
