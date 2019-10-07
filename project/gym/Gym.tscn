@@ -1,13 +1,16 @@
-[gd_scene load_steps=11 format=2]
+[gd_scene load_steps=12 format=2]
 
 [ext_resource path="res://gym/Gym.gd" type="Script" id=1]
 [ext_resource path="res://typer/typer.tscn" type="PackedScene" id=2]
 [ext_resource path="res://menu/menu.tscn" type="PackedScene" id=3]
-[ext_resource path="res://gym/concrete.material" type="Material" id=4]
-[ext_resource path="res://player/player.tscn" type="PackedScene" id=5]
-[ext_resource path="res://gym/Rotate.gd" type="Script" id=6]
+[ext_resource path="res://player/player.tscn" type="PackedScene" id=4]
+[ext_resource path="res://gym/Rotate.gd" type="Script" id=5]
+[ext_resource path="res://tv/crt.tscn" type="PackedScene" id=6]
 [ext_resource path="res://gym/cracked_screen.png" type="Texture" id=7]
-[ext_resource path="res://player/player2.tscn" type="PackedScene" id=8]
+[ext_resource path="res://Gym Essential Models/BenchPress.tscn" type="PackedScene" id=8]
+[ext_resource path="res://Gym Essential Models/Creatine.tscn" type="PackedScene" id=9]
+[ext_resource path="res://gym/concrete.material" type="Material" id=10]
+[ext_resource path="res://player/player2.tscn" type="PackedScene" id=11]
 
 [sub_resource type="BoxShape" id=1]
 extents = Vector3( 10, 1, 10 )
@@ -30,7 +33,7 @@ shape = SubResource( 1 )
 
 [node name="MeshInstance" type="MeshInstance" parent="StaticBody"]
 mesh = SubResource( 2 )
-material/0 = ExtResource( 4 )
+material/0 = ExtResource( 10 )
 
 [node name="Player" parent="." instance=ExtResource( 5 )]
 visible = false
@@ -43,6 +46,9 @@ script = ExtResource( 6 )
 transform = Transform( 1, 0, 0, 0, 0.981023, 0.193892, 0, -0.193892, 0.981023, 0, 5.77, 16 )
 fov = 45.0
 
+[node name="CRT" parent="Position3D/Camera" instance=ExtResource( 6 )]
+transform = Transform( -0.952023, -0.0942121, 0.291165, 0, 0.951433, 0.307855, -0.306028, 0.293085, -0.905786, 4.72, 1.156, -10.344 )
+
 [node name="Crack" type="TextureRect" parent="."]
 visible = false
 anchor_right = 1.0
@@ -50,9 +56,39 @@ anchor_bottom = 1.0
 texture = ExtResource( 7 )
 stretch_mode = 4
 
-[node name="player2" parent="." instance=ExtResource( 8 )]
+[node name="player2" parent="." instance=ExtResource( 11 )]
 transform = Transform( -4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 0, 3.37707, 0 )
 [connection signal="timeout_strength" from="Typer" to="player2" method="_handle_timeout_strength"]
 [connection signal="typing_failed" from="Typer" to="player2" method="_on_lift_failure"]
 [connection signal="typing_finished" from="Typer" to="player2" method="_on_lift_success"]
 [connection signal="typing_progress" from="Typer" to="player2" method="_on_lift_progress"]
+
+[node name="Bench Presses" type="Spatial" parent="."]
+editor/display_folded = true
+
+[node name="BenchPress" parent="Bench Presses" instance=ExtResource( 8 )]
+transform = Transform( 0.0627442, 0, -0.99803, 0, 1, 0, 0.99803, 0, 0.0627442, 6.53083, 2.62792, 5.37361 )
+
+[node name="BenchPress2" parent="Bench Presses" instance=ExtResource( 8 )]
+transform = Transform( 0.0627442, 0, -0.99803, 0, 1, 0, 0.99803, 0, 0.0627442, 0.152339, 2.62792, 5.37361 )
+
+[node name="BenchPress3" parent="Bench Presses" instance=ExtResource( 8 )]
+transform = Transform( 0.0627442, 0, -0.99803, 0, 1, 0, 0.99803, 0, 0.0627442, -5.514, 2.62792, 5.37361 )
+
+[node name="Creatine" type="Spatial" parent="."]
+
+[node name="Creatine" parent="Creatine" instance=ExtResource( 9 )]
+transform = Transform( -0.97969, 0, 0.200519, 0, 1, 0, -0.200519, 0, -0.97969, 8.20641, 1.12363, -0.430386 )
+
+[node name="Creatine2" parent="Creatine" instance=ExtResource( 9 )]
+transform = Transform( -0.954457, 0, -0.29835, 0, 1, 0, 0.29835, 0, -0.954457, 8.20641, 1.12363, -1.53333 )
+
+[node name="Creatine3" parent="Creatine" instance=ExtResource( 9 )]
+transform = Transform( 0.700822, 0, -0.713336, 0, 1, 0, 0.713336, 0, 0.700822, 7.29106, 1.12363, -0.96699 )
+
+[node name="Creatine4" parent="Creatine" instance=ExtResource( 9 )]
+transform = Transform( 0.159936, 0, -0.987127, 0, 1, 0, 0.987127, 0, 0.159936, 8.00049, 2.56357, -0.840113 )
+[connection signal="timeout_strength" from="Typer" to="Player" method="_handle_timeout_strength"]
+[connection signal="typing_failed" from="Typer" to="Player" method="_on_lift_failure"]
+[connection signal="typing_finished" from="Typer" to="Player" method="_on_lift_success"]
+[connection signal="typing_progress" from="Typer" to="Player" method="_on_lift_progress"]
