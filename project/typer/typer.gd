@@ -98,6 +98,9 @@ func _on_text_changed(input_text):
 	input_label.bbcode_text = bbcode
 	emit_signal("typing_progress", min(float(input_text.length()) / float(message_text.length()), 1.0))
 	
+	if message_text.begins_with("That was"):
+		$StretchSound.play()
+	
 func _on_text_entered(input_text):
 	if game_state != STATE_PLAYING:
 		return

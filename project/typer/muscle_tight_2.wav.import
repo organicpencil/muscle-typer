@@ -1,0 +1,21 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/muscle_tight_2.wav-06c857b6ba17cce5f52d17fd5a191375.sample"
+
+[deps]
+
+source_file="res://typer/muscle_tight_2.wav"
+dest_files=[ "res://.import/muscle_tight_2.wav-06c857b6ba17cce5f52d17fd5a191375.sample" ]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=true
+edit/normalize=true
+edit/loop=false
+compress/mode=0

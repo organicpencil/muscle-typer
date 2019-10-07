@@ -1,9 +1,10 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://typer/typer.gd" type="Script" id=1]
 [ext_resource path="res://typer/progress_background.png" type="Texture" id=2]
 [ext_resource path="res://typer/progress_bar.png" type="Texture" id=3]
 [ext_resource path="res://typer/font.tres" type="DynamicFont" id=4]
+[ext_resource path="res://typer/muscle_tight_2.wav" type="AudioStream" id=5]
 
 [node name="Typer" type="Control"]
 anchor_right = 1.0
@@ -69,3 +70,6 @@ margin_bottom = 28.0
 [node name="Timer" type="Timer" parent="."]
 wait_time = 5.0
 one_shot = true
+
+[node name="StretchSound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 5 )
