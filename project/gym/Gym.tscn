@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=2]
+[gd_scene load_steps=15 format=2]
 
 [ext_resource path="res://gym/Gym.gd" type="Script" id=1]
 [ext_resource path="res://typer/typer.tscn" type="PackedScene" id=2]
@@ -16,6 +16,14 @@ extents = Vector3( 10, 1, 10 )
 
 [sub_resource type="PlaneMesh" id=2]
 size = Vector2( 20, 20 )
+
+[sub_resource type="ProceduralSky" id=3]
+ground_bottom_color = Color( 0.682353, 0.556863, 0.556863, 1 )
+
+[sub_resource type="Environment" id=4]
+background_mode = 2
+background_sky = SubResource( 3 )
+background_sky_custom_fov = 180.0
 
 [node name="Gym" type="Node"]
 script = ExtResource( 1 )
@@ -80,6 +88,9 @@ transform = Transform( 0.700822, 0, -0.713336, 0, 1, 0, 0.713336, 0, 0.700822, 7
 
 [node name="Creatine4" parent="Creatine" instance=ExtResource( 10 )]
 transform = Transform( 0.159936, 0, -0.987127, 0, 1, 0, 0.987127, 0, 0.159936, 8.00049, 2.56357, -0.840113 )
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource( 4 )
 [connection signal="timeout_strength" from="Typer" to="player2" method="_handle_timeout_strength"]
 [connection signal="typing_failed" from="Typer" to="player2" method="_on_lift_failure"]
 [connection signal="typing_finished" from="Typer" to="player2" method="_on_lift_success"]
