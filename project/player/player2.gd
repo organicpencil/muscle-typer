@@ -35,10 +35,10 @@ func _ready():
 	$ShakeSound.connect("finished", $ShakeSound, "play")
 
 	_anim_lift = $AnimationPlayer
-#	_anim_grow = _anim_lift.duplicate()
-#	add_child(_anim_grow)
+	_anim_grow = _anim_lift.duplicate()
+	add_child(_anim_grow)
 
-#	_anim_grow.play("grow", -1, 0.0)
+	_anim_grow.play("MusclesGrow", -1, 0.0)
 
 	add_weight()
 	#add_weight()
@@ -127,7 +127,7 @@ func _process(delta):
 	if _anim_lift.is_playing() and _anim_lift.current_animation == "Lift":
 		_anim_lift.seek(_lift_percent_lerp)
 		
-#	_anim_grow.seek(_arm_size_lerp * 4.0) # The animation is 4 seconds long
+	_anim_grow.seek(_arm_size_lerp * 4.0) # The animation is 4 seconds long
 
 	var y = (rand_range(-_shakiness, _shakiness) * 0.2) + starting_rotation.y
 	rotation.y = lerp(y, rotation.y, 0.2)
