@@ -1,6 +1,7 @@
 extends Spatial
 
 export(NodePath) var bar
+export(NodePath) var bell
 
 var _anim_lift
 var _anim_grow
@@ -28,6 +29,7 @@ var next_grunt = 0
 
 func _ready():
 	bar = get_node(bar)
+	bell = get_node(bell)
 
 	$ShakeSound.connect("finished", $ShakeSound, "play")
 
@@ -43,13 +45,18 @@ func _ready():
 
 func add_weight():
 	var weight = WEIGHT_SCENE.instance()
+	var weight2 = WEIGHT_SCENE.instance()
 	bar.add_child(weight)
+	bell.add_child(weight2)
 	weight.translation = Vector3(1.2 + 0.3 * _weights, 0.0, 0.0)
+	weight2.translation = Vector3(1.2 + 0.3 * _weights, 0.0, 0.0)
 
 	weight = WEIGHT_SCENE.instance()
+	weight2 = WEIGHT_SCENE.instance()
 	bar.add_child(weight)
+	bell.add_child(weight2)
 	weight.translation = Vector3(-1.2 - 0.3 * _weights, 0.0, 0.0)
-
+	weight2.translation = Vector3(-1.2 - 0.3 * _weights, 0.0, 0.0)
 	_weights += 1
 
 func _on_lift_success():
@@ -64,18 +71,27 @@ func _on_lift_failure():
 	$ShakeSound.volume_db = -80.0
 
 	var dropped = BAR_DROPPED_SCENE.instance()
+	var dropped2 = BAR_DROPPED_SCENE.instance()
 	if lift_percent >= 1.0:
 		dropped.fully_charged = 1.0
 
 	get_parent().add_child(dropped)
 	dropped.global_transform = bar.global_transform
+	dropped2.global_transform = bell.global_transform
 	for c in bar.get_children():
 		if c.get_name() != "bar":
 			var c2 = c.duplicate()
 			dropped.add_child(c2)
 
+	for c in bell.get_children():
+		if c.get_name() != "bell":
+			var c2 = c.duplicate()
+			dropped2.add_child(c2)
+
 	bar.hide()
+	bell.hide()
 	dropped.connect("tree_exiting", bar, "show")
+	dropped2.connect("tree_exiting", bell, "show")
 
 	_anim_lift.play("DownLift", 0.2)
 	lift_percent = 0.0
@@ -110,4 +126,4 @@ func _process(delta):
 #	_anim_grow.seek(_arm_size_lerp * 4.0) # The animation is 4 seconds long
 
 	var x = rand_range(-_shakiness, _shakiness) * 0.2
-	rotation.x = lerp(rotation.x, x, 0.2)
+	rotation.y = lerp(x, rotation.y, 0.2)
