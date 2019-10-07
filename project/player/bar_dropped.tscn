@@ -1,7 +1,8 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://player/bar_dropped.gd" type="Script" id=1]
 [ext_resource path="res://player/metal.material" type="Material" id=2]
+[ext_resource path="res://player/weight_drop.wav" type="AudioStream" id=3]
 
 [sub_resource type="PhysicsMaterial" id=1]
 bounce = 0.3
@@ -45,3 +46,6 @@ shape = SubResource( 3 )
 wait_time = 1.5
 one_shot = true
 autostart = true
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 3 )

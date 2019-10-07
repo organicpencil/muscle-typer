@@ -15,6 +15,11 @@ func _ready():
 	$AudioStreamPlayer.play()
 	$AudioStreamPlayer.connect("finished", $AudioStreamPlayer, "play")
 	
+func victory():
+	$AudioStreamPlayer.stop()
+	$VictoryPlayer.play()
+	$VictoryPlayer.connect("finished", $VictoryPlayer, "play")
+	
 func load_grunts():
 	var dir = Directory.new()
 	var filepaths = []

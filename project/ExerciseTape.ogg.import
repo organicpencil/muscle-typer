@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/ExerciseTape.ogg-963807c19e3230201571d402873ad15e.oggstr"
+
+[deps]
+
+source_file="res://ExerciseTape.ogg"
+dest_files=[ "res://.import/ExerciseTape.ogg-963807c19e3230201571d402873ad15e.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

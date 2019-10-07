@@ -7,5 +7,6 @@ func _ready():
 	connect("body_entered", self, "_on_body_entered")
 
 func _on_body_entered(body):
-	if fully_charged and !Global.cracked:
-		Global.emit_signal("crack")
+	$AudioStreamPlayer.play()
+	#if fully_charged and !Global.cracked:
+	#	Global.emit_signal("crack")
