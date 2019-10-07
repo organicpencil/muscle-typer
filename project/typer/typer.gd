@@ -133,6 +133,7 @@ func _on_text_entered(input_text):
 		elif messages_processed == total_messages:
 			status_label.bbcode_text = " [color=#66ff33]Victory[/color]"
 			game_state = STATE_WIN
+			Global.victory()
 		else:
 			status_label.bbcode_text = " [color=#66ff33]%s[/color]" % status
 		
@@ -157,6 +158,7 @@ func _on_text_entered(input_text):
 		elif messages_processed == total_messages:
 			status_label.bbcode_text += "\n [color=#66ff33]Still good enough. Congrats.[/color]"
 			game_state = STATE_WIN
+			Global.victory()
 		
 	if game_state == STATE_PLAYING:
 		game_state = STATE_BETWEEN
