@@ -70,7 +70,7 @@ func _on_lift_success():
 
 func _on_lift_failure():
 	$ShakeSound.volume_db = -80.0
-	
+
 	_lifting = false
 
 	var dropped = BAR_DROPPED_SCENE.instance()
@@ -130,7 +130,7 @@ func _process(delta):
 
 	if _anim_lift.is_playing() and _anim_lift.current_animation == "Lift":
 		_anim_lift.seek(_lift_percent_lerp)
-		
+
 	_anim_grow.seek(_arm_size_lerp * 4.0) # The animation is 4 seconds long
 
 	var y = (rand_range(-_shakiness, _shakiness) * 0.2) + starting_rotation.y

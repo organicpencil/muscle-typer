@@ -40,19 +40,19 @@ func _ready():
 	line_edit.connect("text_changed", self, "_on_text_changed")
 	line_edit.connect("text_entered", self, "_on_text_entered")
 	line_edit.grab_focus()
-	
+
 	timer.connect("timeout", self, "_on_timeout")
-	
+
 	_retrieve_json()
-	
+
 	Global.connect("start", self, "_on_start")
-	
+
 func _on_start():
 	if game_state != STATE_PLAYING:
 		game_state = STATE_PLAYING
 		input_label.bbcode_text = " [color=#ffffff]#[/color]"
 		next_message()
-	
+
 func _retrieve_json():
 	# Check if there is a typer file
 	var file = File.new()
@@ -63,7 +63,7 @@ func _retrieve_json():
 	all_phrases = parse.result
 	total_messages = all_phrases.size()
 	file.close()
-	
+
 func _on_timeout():
 	_on_text_entered(null)
 	# TODO - Drop or something
@@ -73,7 +73,7 @@ func next_message():
 		message_label.bbcode_text = "[color=#ff3300]-Random error, how to reproduce?[/color]"
 		print("This shouldn't happen")
 		return false
-		
+
 	input_label.bbcode_text = " [color=#ffffff]#[/color]"
 	message_text = all_phrases.pop_front()
 	message_label.bbcode_text = " [color=#3399ff]%s[/color]" % message_text
@@ -81,38 +81,38 @@ func next_message():
 	timer.start()
 	emit_signal("typing_started")
 	return true
-	
+
 func _on_text_changed(input_text):
 	if game_state != STATE_PLAYING:
 		line_edit.text = ""
 		return
-		
+
 	var bbcode = " "
 	for i in range(0, input_text.length()):
 		if (i < message_text.length()) and (input_text[i] == message_text[i]):
 			bbcode += "[color=#66ff33]%s[/color]" % input_text[i]
 		else:
 			bbcode += "[color=#ff3300]%s[/color]" % input_text[i]
-			
+
 	bbcode += "[color=#ffffff]#[/color]"
 	input_label.bbcode_text = bbcode
 	emit_signal("typing_progress", min(float(input_text.length()) / float(message_text.length()), 1.0))
-	
+
 	if message_text.begins_with("That was"):
 		$StretchSound.play()
 		#Global.emit_signal("crack")
-	
+
 func _on_text_entered(input_text):
 	if game_state != STATE_PLAYING:
 		return
-		
+
 	if input_text == "":
 		# Ignore empty in case the keyboard double-pressed
 		return
-		
+
 	messages_processed += 1
 	timer.stop()
-	
+
 	var success = false
 	if input_text == message_text:
 		Global.emit_signal("motivate")
@@ -126,10 +126,10 @@ func _on_text_entered(input_text):
 			next_prefix += 1
 			if next_prefix == good_prefixes.size():
 				next_prefix = 0
-		
+
 		if prefix:
 			status = prefix + " " + status.to_lower()
-		
+
 		if messages_processed + 1 == total_messages:
 			status_label.bbcode_text = " [color=#66ff33]One more to go![/color]"
 		elif messages_processed == total_messages:
@@ -138,31 +138,31 @@ func _on_text_entered(input_text):
 			Global.victory()
 		else:
 			status_label.bbcode_text = " [color=#66ff33]%s[/color]" % status
-		
-	else:	
+
+	else:
 		mistakes += 1
 		emit_signal("typing_failed")
-		
+
 		if input_text == null:
 			status_label.bbcode_text = " [color=#ff3300]Too slow, ye dropped it. %d/%d[/color]" % [mistakes, max_mistakes]
 		else:
 			status_label.bbcode_text = " [color=#ff3300]Mistake! %d/%d[/color]" % [mistakes, max_mistakes]
-		
+
 		if mistakes + 1 == max_mistakes:
 			status_label.bbcode_text += "\n [color=#ff3300]Last chance, buddy.[/color]"
-			
+
 		elif mistakes == max_mistakes:
 			game_state = STATE_LOSE
 			status_label.bbcode_text += "\n [color=#ff3300]Game over[/color]"
 			Global.lose()
-			
+
 		elif messages_processed + 1 == total_messages:
 			status_label.bbcode_text += "\n [color=#66ff33]... but only one more to go[/color]"
 		elif messages_processed == total_messages:
 			status_label.bbcode_text += "\n [color=#66ff33]Still good enough. Congrats.[/color]"
 			game_state = STATE_WIN
 			Global.victory()
-		
+
 	if game_state == STATE_PLAYING:
 		game_state = STATE_BETWEEN
 		line_edit.text = ""
@@ -170,11 +170,11 @@ func _on_text_entered(input_text):
 		message_label.bbcode_text = ""
 		if !success:
 			yield(get_tree().create_timer(1.5), "timeout")
-			
+
 		if game_state == STATE_BETWEEN:
 			game_state = STATE_PLAYING
 			next_message()
-	
+
 func _process(delta):
 	if game_state == STATE_WIN:
 		timer_progress.value = 0
@@ -182,5 +182,5 @@ func _process(delta):
 		timer_progress.value = ((timer.wait_time - timer.time_left) / timer.wait_time) * 100.0
 	else:
 		timer_progress.value = 0
-		
+
 	emit_signal("timeout_strength", float(timer_progress.value) / 100.0)

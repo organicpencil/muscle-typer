@@ -356,16 +356,6 @@ COLOR = c;
 
 [sub_resource type="ShaderMaterial" id=15]
 shader = SubResource( 14 )
-shader_param/screen_width = 1024.0
-shader_param/screen_height = 600.0
-shader_param/BarrelPower = 1.1
-shader_param/color_bleeding = 1.2
-shader_param/bleeding_range_x = 3.0
-shader_param/bleeding_range_y = 3.0
-shader_param/lines_distance = 4.0
-shader_param/scan_size = 2.0
-shader_param/scanline_alpha = 0.9
-shader_param/lines_velocity = 30.0
 
 [node name="CRT" type="Spatial"]
 script = ExtResource( 1 )

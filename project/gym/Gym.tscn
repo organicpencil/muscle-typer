@@ -64,7 +64,6 @@ stretch_mode = 4
 transform = Transform( -1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, 0, 2.87323, 0 )
 
 [node name="Bench Presses" type="Spatial" parent="."]
-editor/display_folded = true
 
 [node name="BenchPress" parent="Bench Presses" instance=ExtResource( 9 )]
 transform = Transform( 0.0627442, 0, -0.99803, 0, 1, 0, 0.99803, 0, 0.0627442, 6.53083, 2.62792, 5.37361 )

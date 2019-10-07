@@ -30,7 +30,7 @@ bar = NodePath("Armature/Skeleton/HandRight/Bar")
 bell = NodePath("Armature/Skeleton/HandLeft/Bell")
 
 [node name="Head" type="BoneAttachment" parent="Armature/Skeleton" index="0"]
-transform = Transform( 1, 8.52651e-14, 1.69407e-21, 2.84217e-14, 1.19209e-07, -1, -4.26326e-14, 1, 2.84217e-14, -5.08141e-21, 2.41514, -3.97531e-14 )
+transform = Transform( 1, 1.42109e-14, 0, 2.84217e-14, 1.19209e-07, -1, -2.84217e-14, 1, 0, 0, 2.41514, 0 )
 bone_name = "Head"
 
 [node name="Eyes" type="MeshInstance" parent="Armature/Skeleton/Head" index="0"]
@@ -39,13 +39,13 @@ mesh = SubResource( 1 )
 material/0 = null
 
 [node name="HandRight" type="BoneAttachment" parent="Armature/Skeleton" index="1"]
-transform = Transform( 0.637477, -0.417558, -0.647508, -0.340268, -0.906587, 0.249632, -0.69126, 0.0611923, -0.72001, -0.976606, 0.232304, 0.866615 )
+transform = Transform( -0.0645287, -0.327955, 0.942486, -0.00393372, 0.944532, 0.328397, -0.997908, 0.0174837, -0.0622395, -2.47973, 1.20863, 0.0173196 )
 bone_name = "Fingers.R"
 
 [node name="Bar" parent="Armature/Skeleton/HandRight" index="0" instance=ExtResource( 4 )]
 
 [node name="HandLeft" type="BoneAttachment" parent="Armature/Skeleton" index="2"]
-transform = Transform( 0.968501, 0.194075, 0.156012, 0.192782, -0.980959, 0.0235257, 0.157607, 0.00729126, -0.987475, 0.996658, 0.207481, 0.845583 )
+transform = Transform( -0.0645289, 0.327955, -0.942487, 0.00393377, 0.944531, 0.328397, 0.997908, 0.0174837, -0.0622396, 2.47973, 1.20863, 0.0173196 )
 bone_name = "Fingers.L"
 
 [node name="Bell" parent="Armature/Skeleton/HandLeft" index="0" instance=ExtResource( 4 )]
