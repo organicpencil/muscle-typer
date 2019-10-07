@@ -77,6 +77,7 @@ func next_message():
 	input_label.bbcode_text = " [color=#ffffff]#[/color]"
 	message_text = all_phrases.pop_front()
 	message_label.bbcode_text = " [color=#3399ff]%s[/color]" % message_text
+	timer.wait_time = 5.0 + message_text.length() * 0.25
 	timer.start()
 	emit_signal("typing_started")
 	return true
