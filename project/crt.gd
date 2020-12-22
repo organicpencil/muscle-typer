@@ -8,6 +8,7 @@ func _ready():
 	hide()
 	Global.connect("lose", self, "lose")
 	Global.connect("victory", self, "victory")
+	Global.connect("ultimate_victory", self, "ultimate_victory")
 	Global.connect("motivate", self, "motivate")
 	$Timer.connect("timeout", self, "hide")
 
@@ -25,6 +26,12 @@ func victory():
 	show()
 	$Timer.wait_time = $VictorySound.stream.get_length()
 	$Timer.start()
+
+func ultimate_victory():
+	show()
+	$Timer.wait_time = $VictorySound.stream.get_length()
+	$Timer.start()
+
 	$VictorySound.play()
 
 func motivate():

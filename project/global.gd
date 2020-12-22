@@ -1,12 +1,15 @@
 extends Node
 
 var cracked = false
+var timer_scale = 1.0
+var autostart = false
 
 var grunts = []
 
 signal start
 signal crack
 signal victory
+signal ultimate_victory
 signal lose
 signal motivate
 
@@ -15,15 +18,16 @@ func _ready():
 	connect("crack", self, "_on_crack")
 
 	yield(get_tree(), "idle_frame")
-	$AudioStreamPlayer.play()
-	$AudioStreamPlayer.connect("finished", $AudioStreamPlayer, "play")
-
+	$MusicLevel1.play()
 
 func victory():
-	$AudioStreamPlayer.stop()
-	$VictoryPlayer.play()
-	$VictoryPlayer.connect("finished", $VictoryPlayer, "play")
-	emit_signal("win")
+	if timer_scale == 1.0:
+		timer_scale = 0.5
+		$MusicLevel1.stop()
+		$MusicLevel2.play()
+		emit_signal("victory")
+	else:
+		emit_signal("ultimate_victory")
 
 func lose():
 	emit_signal("lose")

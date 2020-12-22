@@ -6,6 +6,9 @@ func _ready():
 	Global.connect("start", self, "_on_start")
 	$AnimationPlayer.play("fade")
 
+	if Global.autostart:
+		Global.emit_signal("start")
+
 func _on_animation_finished(anim):
 	pass
 

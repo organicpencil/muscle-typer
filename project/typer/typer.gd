@@ -46,8 +46,13 @@ func _ready():
 	_retrieve_json()
 
 	Global.connect("start", self, "_on_start")
+	Global.connect("victory", $NextLevel, "show")
+	Global.connect("ultimate_victory", $UltimateVicotry, "show")
 
 func _on_start():
+	$NextLevel.hide()
+	$UltimateVictory.hide()
+
 	if game_state != STATE_PLAYING:
 		game_state = STATE_PLAYING
 		input_label.bbcode_text = " [color=#ffffff]#[/color]"
@@ -77,7 +82,7 @@ func next_message():
 	input_label.bbcode_text = " [color=#ffffff]#[/color]"
 	message_text = all_phrases.pop_front()
 	message_label.bbcode_text = " [color=#3399ff]%s[/color]" % message_text
-	timer.wait_time = 5.0 + message_text.length() * 0.25
+	timer.wait_time = (5.0 + message_text.length() * 0.25) * Global.timer_scale
 	timer.start()
 	emit_signal("typing_started")
 	return true
@@ -115,7 +120,6 @@ func _on_text_entered(input_text):
 
 	var success = false
 	if input_text == message_text:
-		Global.emit_signal("motivate")
 		success = true
 		emit_signal("typing_finished")
 		var prefix = good_prefixes[next_prefix]
@@ -132,19 +136,26 @@ func _on_text_entered(input_text):
 
 		if messages_processed + 1 == total_messages:
 			status_label.bbcode_text = " [color=#66ff33]One more to go![/color]"
+			Global.emit_signal("motivate")
+
 		elif messages_processed == total_messages:
 			status_label.bbcode_text = " [color=#66ff33]Victory[/color]"
 			game_state = STATE_WIN
+
+			if Global.timer_scale == 1.0:
+				Global.emit_signal("motivate")
+
 			Global.victory()
 		else:
 			status_label.bbcode_text = " [color=#66ff33]%s[/color]" % status
+			Global.emit_signal("motivate")
 
 	else:
 		mistakes += 1
 		emit_signal("typing_failed")
 
 		if input_text == null:
-			status_label.bbcode_text = " [color=#ff3300]Too slow, ye dropped it. %d/%d[/color]" % [mistakes, max_mistakes]
+			status_label.bbcode_text = " [color=#ff3300]Too slow. %d/%d[/color]" % [mistakes, max_mistakes]
 		else:
 			status_label.bbcode_text = " [color=#ff3300]Mistake! %d/%d[/color]" % [mistakes, max_mistakes]
 
@@ -174,6 +185,14 @@ func _on_text_entered(input_text):
 		if game_state == STATE_BETWEEN:
 			game_state = STATE_PLAYING
 			next_message()
+
+func _input(event):
+	if event is InputEventKey and event.is_pressed():
+		if event.scancode == KEY_SPACE:
+			if game_state == STATE_WIN:
+				yield(get_tree(), "idle_frame")
+				Global.autostart = true
+				get_tree().change_scene("res://gym/Gym.tscn")
 
 func _process(delta):
 	if game_state == STATE_WIN:

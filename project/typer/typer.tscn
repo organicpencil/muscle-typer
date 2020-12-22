@@ -10,6 +10,9 @@
 anchor_right = 1.0
 anchor_bottom = 1.0
 script = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
 status_label = NodePath("Status")
 message_label = NodePath("Message")
 input_label = NodePath("Input")
@@ -73,3 +76,35 @@ one_shot = true
 
 [node name="StretchSound" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 5 )
+
+[node name="NextLevel" type="Label" parent="."]
+visible = false
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -375.0
+margin_top = -22.0
+margin_right = 375.0
+margin_bottom = 22.0
+custom_fonts/font = ExtResource( 4 )
+text = "Press space for the NEXT LEVEL"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="UltimateVictory" type="Label" parent="."]
+visible = false
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -200.0
+margin_top = -22.0
+margin_right = 200.0
+margin_bottom = 22.0
+custom_fonts/font = ExtResource( 4 )
+text = "ULTIMATE VICTORY"
+__meta__ = {
+"_edit_use_anchors_": false
+}
