@@ -45,7 +45,7 @@ margin_right = 175.0
 margin_bottom = 195.0
 custom_fonts/normal_font = ExtResource( 2 )
 bbcode_enabled = true
-bbcode_text = "[color=blue]SPACE[/color] to begin
+bbcode_text = "[color=#00BFFF]SPACE[/color] to begin
 [color=red]ESCAPE[/color] to quit"
 text = "SPACE to begin
 ESCAPE to quit"
