@@ -12,7 +12,7 @@ func _ready():
 	Global.connect("motivate", self, "motivate")
 	$Timer.connect("timeout", self, "hide")
 
-func _process(delta):
+func _process(_delta):
 	#rotate_object_local(Vector3(0, 1, 0), -0.03)
 	pass
 

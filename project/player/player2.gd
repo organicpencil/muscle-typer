@@ -109,7 +109,7 @@ func _handle_timeout_strength(timeout):
 
 	$ShakeSound.volume_db = -40.0 + 40.0 * timeout
 
-func _process(delta):
+func _process(_delta):
 	_lift_percent_lerp = lerp(_lift_percent_lerp, lift_percent, 0.1)
 	_arm_size_lerp = min(lerp(_arm_size_lerp, arm_size, 0.01), 1.0)
 

@@ -47,7 +47,7 @@ func _ready():
 
 	Global.connect("start", self, "_on_start")
 	Global.connect("victory", $NextLevel, "show")
-	Global.connect("ultimate_victory", $UltimateVicotry, "show")
+	Global.connect("ultimate_victory", $UltimateVictory, "show")
 
 func _on_start():
 	$NextLevel.hide()
@@ -194,7 +194,7 @@ func _input(event):
 				Global.autostart = true
 				get_tree().change_scene("res://gym/Gym.tscn")
 
-func _process(delta):
+func _process(_delta):
 	if game_state == STATE_WIN:
 		timer_progress.value = 0
 	elif game_state == STATE_PLAYING:

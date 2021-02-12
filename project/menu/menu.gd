@@ -9,7 +9,7 @@ func _ready():
 	if Global.autostart:
 		Global.emit_signal("start")
 
-func _on_animation_finished(anim):
+func _on_animation_finished(_anim):
 	pass
 
 func _input(event):
