@@ -76,7 +76,7 @@ func _on_timeout():
 func next_message():
 	if !all_phrases.size():
 		message_label.bbcode_text = "[color=#ff3300]-Random error, how to reproduce?[/color]"
-		print("This shouldn't happen")
+		push_error("This shouldn't happen")
 		return false
 
 	input_label.bbcode_text = " [color=#ffffff]#[/color]"

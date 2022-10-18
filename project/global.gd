@@ -39,7 +39,6 @@ func load_grunts():
 		dir.list_dir_begin()
 		var file_name = dir.get_next()
 		while file_name != "":
-			print(file_name)
 			if file_name.ends_with(".wav"):
 				filepaths.append("res://grunts/" + file_name)
 
@@ -60,7 +59,7 @@ func load_grunts():
 		for f in filepaths:
 			grunts.append(load(f))
 	else:
-		print("Error accessing grunts folder")
+		push_error("Couldn't access grunt sounds")
 
 func _on_crack():
 	cracked = true

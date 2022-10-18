@@ -29,7 +29,7 @@ func _retrieve_json():
 	# Check if there is a classes file
 	var file = File.new()
 	if not file.file_exists("res://TyperModule/typer.json"):
-		print("Missing classes.json file.")
+		push_error("Missing classes.json file.")
 	else:
 		file.open("res://TyperModule/typer.json", file.READ)
 		var json = file.get_as_text()
@@ -37,7 +37,6 @@ func _retrieve_json():
 		var classDict = parse.result
 		_get_level_phrases(classDict)
 		file.close()
-	pass
 
 ## Get list of phrases for specific level
 func _get_level_phrases(newDict):
@@ -50,7 +49,6 @@ func _get_level_phrases(newDict):
 	# picks a random phrase from an array
 	currentPhrase = levelPhrases[(randi() % levelPhrases.size())]
 	$CurrentPhrase.text = currentPhrase
-	print(currentPhrase)
 
 ##
 # Goes throught phrase and what you typed and checks correctness
@@ -74,6 +72,7 @@ func _parse_text(phrase):
 					matchingOrder.append(false)
 			secondaryCount+=1
 		primaryCount+=1
+
 	return([currentPhraseToMatch.size(), matches, matchingOrder])
 
 func _play_grunt():
@@ -93,6 +92,7 @@ func _check_complete(checks):
 		for order in checks[2]:
 			if order == false:
 				return false
+
 		return true
 
 func _check_accuracy(phrase : String):
@@ -110,6 +110,7 @@ func _on_TextEdit_text_changed():
 		phrase = storedPhrase
 	else:
 		storedPhrase = phrase
+
 	_parse_text(phrase);
 
 	var failures = _check_accuracy(phrase)
@@ -123,7 +124,6 @@ func _on_TextEdit__on_submit():
 	phrases_complete += 1
 
 	if _check_complete(_parse_text(storedPhrase)):
-		print("Success!")
 		player.lift_success()
 		positive_responses.shuffle()
 		$Status.text = positive_responses[0]
@@ -135,7 +135,6 @@ func _on_TextEdit__on_submit():
 			$Status.text = "Victory. You are now\nthe stroncjkest of huamins"
 			game_over = true
 	else:
-		print("Failure")
 		failures += 1
 		player.lift_failure()
 		$Status.text = "Mistake! %d/%d" % [failures, MAX_FAILURES]
@@ -154,5 +153,3 @@ func _on_TextEdit__on_submit():
 	player.arm_size += 1.0 / total_phrases
 	currentPhrase = levelPhrases[(randi() % levelPhrases.size())]
 	$CurrentPhrase.text = currentPhrase
-	print(currentPhrase)
-	pass
