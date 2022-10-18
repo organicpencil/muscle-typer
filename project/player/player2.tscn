@@ -36,7 +36,6 @@ bone_name = "Head"
 [node name="Eyes" type="MeshInstance" parent="Armature/Skeleton/Head" index="0"]
 transform = Transform( 1, 0, 0, 0, 0, 1, 0, -1, 0, 0, 0, 1.92744 )
 mesh = SubResource( 1 )
-material/0 = null
 
 [node name="HandRight" type="BoneAttachment" parent="Armature/Skeleton" index="1"]
 transform = Transform( -0.0645287, -0.327955, 0.942486, -0.00393372, 0.944532, 0.328397, -0.997908, 0.0174837, -0.0622395, -2.47973, 1.20863, 0.0173196 )

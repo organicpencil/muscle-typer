@@ -352,28 +352,18 @@ expand = true
 
 [node name="Cube" type="MeshInstance" parent="."]
 mesh = SubResource( 1 )
-material/0 = null
-material/1 = null
-material/2 = null
 
 [node name="Cube001" type="MeshInstance" parent="."]
 transform = Transform( 0.1, 0, 0, 0, 0.05, 0, 0, 0, 0.1, -1, 0.4, -1.03 )
 mesh = SubResource( 2 )
-material/0 = null
 
 [node name="Cylinder" type="MeshInstance" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -1, 0.2, -1.05 )
 mesh = SubResource( 3 )
-material/0 = null
-material/1 = null
-material/2 = null
 
 [node name="Cylinder001" type="MeshInstance" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, -0.84, 0.2, -1.05 )
 mesh = SubResource( 4 )
-material/0 = null
-material/1 = null
-material/2 = null
 
 [node name="Sphere" type="MeshInstance" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 0.2, 0, 1.5, -0.8 )
