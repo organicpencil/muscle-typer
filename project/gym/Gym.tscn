@@ -90,6 +90,7 @@ transform = Transform( 0.159936, 0, -0.987127, 0, 1, 0, 0.987127, 0, 0.159936, 8
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource( 4 )
+
 [connection signal="timeout_strength" from="Typer" to="player2" method="_handle_timeout_strength"]
 [connection signal="typing_failed" from="Typer" to="player2" method="_on_lift_failure"]
 [connection signal="typing_finished" from="Typer" to="player2" method="_on_lift_success"]
