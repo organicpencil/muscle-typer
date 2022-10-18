@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=2]
+[gd_scene load_steps=14 format=2]
 
 [ext_resource path="res://gym/Gym.gd" type="Script" id=1]
 [ext_resource path="res://typer/typer.tscn" type="PackedScene" id=2]
@@ -17,13 +17,11 @@ extents = Vector3( 10, 1, 10 )
 [sub_resource type="PlaneMesh" id=2]
 size = Vector2( 20, 20 )
 
-[sub_resource type="ProceduralSky" id=3]
-ground_bottom_color = Color( 0.682353, 0.556863, 0.556863, 1 )
-
 [sub_resource type="Environment" id=4]
-background_mode = 2
-background_sky = SubResource( 3 )
+background_mode = 1
 background_sky_custom_fov = 180.0
+background_color = Color( 0.682353, 0.556863, 0.556863, 1 )
+ambient_light_color = Color( 1, 1, 1, 1 )
 
 [node name="Gym" type="Node"]
 script = ExtResource( 1 )
